@@ -1,0 +1,7 @@
+# Blocks commits that contain anything that looks like a key or token.
+# Install once with: uvx pre-commit install
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks

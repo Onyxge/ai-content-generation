@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "Listen First (example)",
+    "logline": "Example storyboard for tests and mock runs: a boy in Dessie learns to repair radios. Not our film.",
+    "languages": ["en", "am"],
+    "primary": "en",
+    "runtime_s": [60, 90]
+  },
+  "style": {
+    "block": "warm hand-painted gouache, soft golden-hour light, light film grain, muted ochre and teal palette"
+  },
+  "characters": [
+    {
+      "id": "father",
+      "real_person": false,
+      "description": "a slim young man with short hair, a white shirt with rolled sleeves and a small screwdriver behind his ear",
+      "reference": "ref_father"
+    }
+  ],
+  "references": [
+    {
+      "id": "ref_father",
+      "kind": "character",
+      "characters": ["father"],
+      "prompt": "character sheet of the same young man: front view, three-quarter view and profile, plain background",
+      "seeds": [41, 42],
+      "selected": 42
+    }
+  ],
+  "voices": {
+    "en": {"model": "gemini-3.8-flash-tts", "voice": "example-voice", "style": "warm, unhurried, intimate"},
+    "am": {"model": "gemini-3.8-flash-tts", "voice": "example-voice", "style": "warm, unhurried, intimate"}
+  },
+  "shots": [
+    {
+      "id": "s01",
+      "reason": "Open on the town so the story has a place before it has a person.",
+      "beat": "opening",
+      "size": "extreme wide",
+      "duration_s": 8,
+      "characters": [],
+      "image_prompt": "hills above Dessie at dawn, tin roofs catching the first light, mist in the valley",
+      "keyframe_seed": 1001,
+      "motion": {"mode": "kenburns", "prompt": "slow push-in", "kenburns": {"zoom": "in", "pan": "none"}},
+      "narration": {"en": "This is my father's story.", "am": "ይህ የአባቴ ታሪክ ነው።"}
+    },
+    {
+      "id": "s02",
+      "reason": "Introduce him through the habit that starts everything: listening.",
+      "beat": "setup",
+      "size": "medium",
+      "duration_s": 8,
+      "characters": ["father"],
+      "image_prompt": "the young man as a boy, sitting on a wooden stool beside a small radio in a dim room, evening",
+      "keyframe_seed": 1002,
+      "motion": {"mode": "i2v", "fallback": "kenburns", "prompt": "he leans slightly toward the radio, fixed camera", "seed": 2002},
+      "narration": {"en": "He grew up in Dessie, listening to the radio every evening.", "am": "ደሴ ውስጥ አደገ፤ በየምሽቱ ሬዲዮ ያዳምጥ ነበር።"}
+    },
+    {
+      "id": "s03",
+      "reason": "The turn: the sound he loves stops.",
+      "beat": "turn",
+      "size": "close-up",
+      "duration_s": 7,
+      "characters": [],
+      "image_prompt": "close-up of an old radio dial, its glow fading",
+      "keyframe_seed": 1003,
+      "motion": {"mode": "kenburns", "prompt": "slow pull-out", "kenburns": {"zoom": "out", "pan": "none"}},
+      "narration": {"en": "One day the radio went silent.", "am": "አንድ ቀን ሬዲዮው ዝም አለ።"}
+    },
+    {
+      "id": "s04",
+      "reason": "Curiosity instead of loss: he opens it.",
+      "beat": "decision",
+      "size": "insert",
+      "duration_s": 8,
+      "characters": ["father"],
+      "image_prompt": "a boy's hands opening the back of an old radio on a table, a tangle of coloured wires inside",
+      "keyframe_seed": 1004,
+      "motion": {"mode": "i2v", "fallback": "kenburns", "prompt": "the hands lift the back panel slowly, fixed camera", "seed": 2004},
+      "narration": {"en": "He opened it, and found a world of wires.", "am": "ከፈተው፤ በውስጡም የሽቦዎች ዓለም አገኘ።"}
+    },
+    {
+      "id": "s05",
+      "reason": "Time passing: learning is slow and patient.",
+      "beat": "montage",
+      "size": "medium close-up",
+      "duration_s": 8,
+      "characters": ["father"],
+      "image_prompt": "the young man at night working under a small lamp, tools laid out neatly",
+      "keyframe_seed": 1005,
+      "motion": {"mode": "kenburns", "prompt": "slow pan right", "kenburns": {"zoom": "in", "pan": "right"}},
+      "narration": {"en": "Night after night, he learned how each part works.", "am": "ሌሊት ከሌሊት እያንዳንዱ ክፍል እንዴት እንደሚሠራ ተማረ።"}
+    },
+    {
+      "id": "s06",
+      "reason": "The town comes to him: the skill gives him a place in the neighbourhood.",
+      "beat": "payoff",
+      "size": "wide",
+      "duration_s": 8,
+      "characters": ["father"],
+      "image_prompt": "a small repair stall on a busy street, neighbours waiting with radios in their hands",
+      "keyframe_seed": 1006,
+      "motion": {"mode": "kenburns", "prompt": "slow push-in", "kenburns": {"zoom": "in", "pan": "none"}},
+      "narration": {"en": "Soon the whole neighbourhood brought him their radios.", "am": "ብዙም ሳይቆይ የሰፈሩ ሰው ሁሉ ሬዲዮውን ያመጣለት ጀመር።"}
+    },
+    {
+      "id": "s07",
+      "reason": "The saying the film is really about, in his words.",
+      "beat": "theme",
+      "size": "close-up",
+      "duration_s": 8,
+      "characters": ["father"],
+      "image_prompt": "the young man smiling, holding a radio to his ear, warm light on his face",
+      "keyframe_seed": 1007,
+      "motion": {"mode": "i2v", "fallback": "kenburns", "prompt": "he turns his head slightly toward the radio and smiles, fixed camera", "seed": 2007},
+      "narration": {"en": "He always says: listen first, then fix.", "am": "ሁልጊዜ እንዲህ ይላል፦ መጀመሪያ አዳምጥ፣ ከዚያ አስተካክል።"}
+    },
+    {
+      "id": "s08",
+      "reason": "Bring it back to the narrator: the story lives on in memory.",
+      "beat": "closing",
+      "size": "wide",
+      "duration_s": 9,
+      "characters": [],
+      "image_prompt": "an empty workbench at dusk with a single radio, a window open to the hills",
+      "keyframe_seed": 1008,
+      "motion": {"mode": "still", "prompt": "hold"},
+      "narration": {"en": "When I close my eyes, I can still hear his radios.", "am": "ዓይኔን ስጨፍን አሁንም የእሱን ሬዲዮዎች እሰማለሁ።"}
+    }
+  ],
+  "music": {
+    "cues": [
+      {
+        "id": "m1",
+        "from": "s01",
+        "to": "s08",
+        "caption": "gentle krar and soft strings, warm, nostalgic, sparse, no drums",
+        "instrumental": true,
+        "bpm": 70,
+        "key": "D minor",
+        "length_s": 100,
+        "seeds": [11, 12],
+        "selected": 12,
+        "why": "example: the quieter candidate leaves room for the voice"
+      }
+    ]
+  },
+  "end_card": {
+    "lines": [
+      "Made with AI",
+      "Images: FLUX.2 klein · Motion: Wan 2.2 · Voice: Gemini TTS · Score: ACE-Step 1.5",
+      "Example storyboard, not our film"
+    ],
+    "duration_s": 3
+  }
+}

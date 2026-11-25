@@ -1,0 +1,21 @@
+# secrets and private family material (ADR-013)
+.env
+private/
+
+# mock runs and local scratch (ADR-016)
+build/
+outputs/_archive/
+outputs/**/.tmp-*
+
+# local renders FFmpeg rebuilds from committed model outputs (ADR-016)
+outputs/shots/*.kb.*.mp4
+outputs/shots/*.kb.*.mp4.json
+outputs/final/
+outputs/radio/
+
+# python and tooling
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.DS_Store
