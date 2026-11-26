@@ -1,0 +1,11 @@
+{
+  "cache_key": "5e133ac161e6784191057804ef5658a9216dba25a0ae6c2fd0539b5bde3823b6",
+  "gpu_s": 2059.79,
+  "model": "Wan2.2-TI2V-5B (diffusers, Wan2.2-TI2V-5B-Diffusers)",
+  "output_sha": "a5956627de9956217fdc33a8feb040087157d3cb6a9d8880fa825d10a0fe07ef",
+  "provider": "gpu-runner (kaggle)",
+  "run_id": "r-20261126-155243-7146",
+  "seed": 2006,
+  "stage": "shots",
+  "unit": "s06.i2v"
+}

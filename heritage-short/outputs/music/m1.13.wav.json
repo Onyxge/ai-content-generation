@@ -1,0 +1,11 @@
+{
+  "cache_key": "515fd215ac25266390c06c8d23f100fb0fae29a735d977ee49d7614a1c933f75",
+  "gpu_s": 25.77,
+  "model": "ACE-Step-1.5 (acestep-v15-turbo, DiT only)",
+  "output_sha": "4df32185df0766909297c17869e4c548f35cc4d0a3677f2bad024bdd024f4af2",
+  "provider": "gpu-runner (kaggle)",
+  "run_id": "r-20261126-110236-e584",
+  "seed": 13,
+  "stage": "music",
+  "unit": "m1.13"
+}

@@ -1,0 +1,111 @@
+{
+  "language": "en",
+  "fps": 24,
+  "shots": [
+    {
+      "id": "s01",
+      "start": 0.0,
+      "narration": {
+        "file": "outputs/narration/en/s01.wav",
+        "start": 0.4,
+        "duration": 7.66
+      },
+      "length": 9.0
+    },
+    {
+      "id": "s02",
+      "start": 9.0,
+      "narration": {
+        "file": "outputs/narration/en/s02.wav",
+        "start": 9.4,
+        "duration": 4.25
+      },
+      "length": 6.0
+    },
+    {
+      "id": "s03",
+      "start": 15.0,
+      "narration": {
+        "file": "outputs/narration/en/s03.wav",
+        "start": 15.4,
+        "duration": 4.7
+      },
+      "length": 7.0
+    },
+    {
+      "id": "s04",
+      "start": 22.0,
+      "narration": {
+        "file": "outputs/narration/en/s04.wav",
+        "start": 22.4,
+        "duration": 5.81
+      },
+      "length": 6.791666666666667
+    },
+    {
+      "id": "s05",
+      "start": 28.792,
+      "narration": {
+        "file": "outputs/narration/en/s05.wav",
+        "start": 29.192,
+        "duration": 4.1
+      },
+      "length": 6.0
+    },
+    {
+      "id": "s06",
+      "start": 34.792,
+      "narration": {
+        "file": "outputs/narration/en/s06.wav",
+        "start": 35.192,
+        "duration": 4.39
+      },
+      "length": 7.0
+    },
+    {
+      "id": "s07",
+      "start": 41.792,
+      "narration": {
+        "file": "outputs/narration/en/s07.wav",
+        "start": 42.192,
+        "duration": 5.42
+      },
+      "length": 7.0
+    },
+    {
+      "id": "s08",
+      "start": 48.792,
+      "narration": {
+        "file": "outputs/narration/en/s08.wav",
+        "start": 49.192,
+        "duration": 6.79
+      },
+      "length": 8.0
+    },
+    {
+      "id": "s09",
+      "start": 56.792,
+      "narration": {
+        "file": "outputs/narration/en/s09.wav",
+        "start": 57.192,
+        "duration": 4.72
+      },
+      "length": 6.0
+    },
+    {
+      "id": "s10",
+      "start": 62.792,
+      "narration": {
+        "file": "outputs/narration/en/s10.wav",
+        "start": 63.192,
+        "duration": 6.52
+      },
+      "length": 8.0
+    }
+  ],
+  "end_card": {
+    "start": 70.792,
+    "length": 3
+  },
+  "total_s": 73.792
+}

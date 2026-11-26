@@ -1,0 +1,10 @@
+{
+  "cache_key": "a1116eab370841c1421e83adfaa224df34dfd93c8a13bf5c533f9f4ebe9c4a2a",
+  "model": "@cf/black-forest-labs/flux-2-klein-4b",
+  "output_sha": "b55f33122f9139c2d78fa10b6b8f6a534e1c010367c2648eb8a7fef0152becea",
+  "provider": "cloudflare",
+  "run_id": "r-20261125-221134-dafe",
+  "seed": 1002,
+  "stage": "keyframes",
+  "unit": "s02"
+}
