@@ -1,14 +1,15 @@
 """End-to-end on mock providers: the walkthrough demo as a test. One edit to the storyboard
 must regenerate exactly that unit and its dependants, and nothing else."""
 import json
-import shutil
 
 import pytest
 
 from pipeline.cli import main
+from pipeline.media import missing_filters
 from pipeline.engine.logs import read_jsonl
 
-needs_ffmpeg = pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="FFmpeg is not installed")
+needs_ffmpeg = pytest.mark.skipif(bool(missing_filters()),
+                                  reason="FFmpeg is missing or lacks filters the pipeline uses (FAILURES.md F2)")
 
 
 def film(root, *args):
@@ -75,7 +76,37 @@ def test_radio_cut_needs_only_narration(mock_root):
     assert radio.exists() and radio.stat().st_size > 0
 
 
-def test_real_mode_without_providers_fails_clearly(mock_root, capsys):
-    """A clean real workspace with no cache and no providers must say what's missing, not crash."""
+def test_real_mode_without_keys_fails_clearly(mock_root, capsys, monkeypatch):
+    """A clean real workspace with no cache and no keys must say which key is missing, not crash."""
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     assert main(["render", "--stage", "narration", "--root", str(mock_root)]) == 1
-    assert "U3" in capsys.readouterr().out
+    assert "add GEMINI_API_KEY to .env" in capsys.readouterr().out
+
+
+def test_smoke_logs_one_call_per_provider_once_a_day(mock_root):
+    assert film(mock_root, "smoke") in (0, 1)              # 1 only if this FFmpeg lacks filters
+    runs = [r for r in read_jsonl(mock_root / "build" / "mock" / "runs.jsonl") if r["stage"] == "smoke"]
+    assert sorted(r["unit"] for r in runs) == ["image", "speech", "speech_am", "text"]
+    assert {r["actor"] for r in runs} == {"pipeline"} and all(r["latency_ms"] >= 0 for r in runs)
+    film(mock_root, "smoke")
+    assert len([r for r in read_jsonl(mock_root / "build" / "mock" / "runs.jsonl") if r["stage"] == "smoke"]) == 4
+
+
+@needs_ffmpeg
+def test_radio_cut_uses_the_pinned_score_once_rendered(mock_root):
+    assert film(mock_root, "render", "--stage", "narration", "--lang", "en") == 0
+    assert film(mock_root, "radio", "--lang", "en") == 0
+    assert film(mock_root, "render", "--stage", "music") == 0
+    assert film(mock_root, "radio", "--lang", "en") == 0
+    radios = [s for s in read_jsonl(mock_root / "build" / "mock" / "stages.jsonl") if s.get("unit") == "radio.en"]
+    assert [r["music"] for r in radios] == ["temp drone (no score rendered yet)", "m1.12"]   # m1.12 is the pinned take
+
+
+def test_music_anchor_shifts_the_score_per_language(storyboard):
+    """A take's quiet moment stays on its shot even when one language runs longer (E15)."""
+    from pipeline.assemble import music_offset
+    sb = {**storyboard, "music": {"cues": [{**storyboard["music"]["cues"][0], "anchor": {"shot": "s03", "at_s": 10.0}}]}}
+    en = {"shots": [{"id": "s01", "start": 0.0}, {"id": "s02", "start": 6.0}, {"id": "s03", "start": 9.5}]}
+    am = {"shots": [{"id": "s01", "start": 0.0}, {"id": "s02", "start": 7.0}, {"id": "s03", "start": 11.25}]}
+    assert music_offset(sb, en) == -0.5 and music_offset(sb, am) == 1.25
+    assert music_offset(storyboard, am) == 0.0                     # no anchor, no shift
