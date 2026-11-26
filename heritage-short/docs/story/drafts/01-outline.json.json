@@ -1,0 +1,13 @@
+{
+  "cache_key": "8c909bcc4221d2bcd89898b6334eb66f4bb9269e0b4bab34c824be0d5b09e859",
+  "edited_by": "Y",
+  "kept_by": "Y",
+  "kept_from_key": "e4488776313b8e252d578852b03fcaae094053ea33b7818b911ceca9baf609c3",
+  "model": "gemini-3.8-flash",
+  "output_sha": "ab4c16437d724c33a318a2a10077dc8c451b80568d6863c0562162700fc9bca9",
+  "provider": "gemini",
+  "run_id": "r-20261125-212234-b813",
+  "seed": null,
+  "stage": "story",
+  "unit": "outline"
+}

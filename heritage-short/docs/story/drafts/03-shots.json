@@ -1,0 +1,162 @@
+{
+  "shots": [
+    {
+      "id": "s01",
+      "beat": "b1",
+      "reason": "Establishes the quiet routine and humble environment where Tesfaye begins his day of palace service.",
+      "size": "wide",
+      "duration_s": 7,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered wide shot of tesfaye arranging glass flasks in a stone palace kitchen before dawn, illuminated by the warm amber glow of oil lamps with deep shadows in the background.",
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow gentle push in toward the center",
+        "zoom": "in",
+        "pan": "none"
+      }
+    },
+    {
+      "id": "s02",
+      "beat": "b1",
+      "reason": "Shows the craft and steady precision of serving honey wine into the traditional glass flask.",
+      "size": "insert",
+      "duration_s": 6,
+      "characters": [],
+      "image_prompt": "Centered insert shot of golden honey wine pouring in a thin, perfectly steady stream into a traditional glass berele flask resting on a wooden surface under warm lamp light.",
+      "motion": {
+        "mode": "i2v",
+        "prompt": "Static camera as honey wine pours smoothly into the glass flask with rising micro-bubbles"
+      }
+    },
+    {
+      "id": "s03",
+      "beat": "b1",
+      "reason": "Introduces Tesfaye's composed and watchful demeanour as he prepares to serve unnoticed.",
+      "size": "medium close-up",
+      "duration_s": 7,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered medium close-up of tesfaye holding a serving tray at chest height, looking forward with quiet dignity in a dimly lit palace corridor.",
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Very slow lateral pan to the left across the frame",
+        "zoom": "none",
+        "pan": "left"
+      }
+    },
+    {
+      "id": "s04",
+      "beat": "b2",
+      "reason": "Sets the stage of the formal evening banquet and the grandeur surrounding the unnoticed server.",
+      "size": "wide",
+      "duration_s": 6,
+      "characters": [
+        "great_emperor"
+      ],
+      "image_prompt": "Centered wide shot of a long formal palace banquet table covered in white linen and glowing candlelight, with great_emperor seated at the head in the distance in profile.",
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow smooth pull out revealing the depth of the banquet hall",
+        "zoom": "out",
+        "pan": "none"
+      }
+    },
+    {
+      "id": "s05",
+      "beat": "b2",
+      "reason": "Captures the dismissive arrogance of the nobleman questioning Tesfaye's significance.",
+      "size": "medium",
+      "duration_s": 6,
+      "characters": [
+        "banquet_guest"
+      ],
+      "image_prompt": "Centered medium shot of banquet_guest seated at the banquet table beside candlelit glasses, turning sideways with a thin smirk.",
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow drift panning right with a subtle push in",
+        "zoom": "in",
+        "pan": "right"
+      }
+    },
+    {
+      "id": "s06",
+      "beat": "b2",
+      "reason": "Shows Tesfaye absorbing the mockery with silent restraint and wounded pride.",
+      "size": "medium close-up",
+      "duration_s": 7,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered medium close-up of tesfaye standing beside the banquet table, slowly lowering his eyes in silence under soft candlelight.",
+      "motion": {
+        "mode": "i2v",
+        "prompt": "Static camera as the server gently lowers his gaze and holds his breath in composure"
+      }
+    },
+    {
+      "id": "s07",
+      "beat": "b3",
+      "reason": "Shows the emperor taking notice and commanding the hall to honor the server.",
+      "size": "wide",
+      "duration_s": 7,
+      "characters": [
+        "great_emperor"
+      ],
+      "image_prompt": "Centered wide shot framed from behind great_emperor at the head of the banquet table, as he raises his glass toward the room in warm candle glow.",
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow push in toward the head of the banquet table",
+        "zoom": "in",
+        "pan": "none"
+      }
+    },
+    {
+      "id": "s08",
+      "beat": "b3",
+      "reason": "Highlights the pivotal emotional breakthrough as Tesfaye is recognized by name.",
+      "size": "close-up",
+      "duration_s": 8,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered close-up of tesfaye looking up with glistening eyes, struggling to contain an overwhelming emotion amidst soft background candlelight.",
+      "motion": {
+        "mode": "i2v",
+        "prompt": "Subtle handheld tremor as the subject takes a slow, shaky breath with glistening eyes"
+      }
+    },
+    {
+      "id": "s09",
+      "beat": "b4",
+      "reason": "Reflects the intimate ritual of his final pour after the hall has emptied.",
+      "size": "insert",
+      "duration_s": 6,
+      "characters": [],
+      "image_prompt": "Centered insert shot of a single glass berele flask filled with golden honey wine resting on a stone windowsill beside a solitary candle.",
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow lateral pan to the left keeping the glowing glass centered",
+        "zoom": "none",
+        "pan": "left"
+      }
+    },
+    {
+      "id": "s10",
+      "beat": "b4",
+      "reason": "Concludes the film on Tesfaye's quiet private pride and transformed dignity.",
+      "size": "medium",
+      "duration_s": 8,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered medium shot of tesfaye standing alone in an open stone palace archway at night, holding a berele flask and gazing out at distant city lights.",
+      "motion": {
+        "mode": "i2v",
+        "prompt": "Gentle forward camera drift as the subject slowly brings the glass to his lips looking out"
+      }
+    }
+  ]
+}
