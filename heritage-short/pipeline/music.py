@@ -19,7 +19,7 @@ class Music(Stage):
         units = []
         for cue in ctx.sb["music"]["cues"]:
             for seed in cue["seeds"]:
-                spec = {k: cue.get(k) for k in FIELDS} | {"seed": seed}
+                spec = {k: cue.get(k) for k in FIELDS} | {"seed": seed, "steps": ctx.cfg["music"]["steps"]}
                 units.append(Unit(self.name, f"{cue['id']}.{seed}",
                                   ctx.ws.outputs / "music" / f"{cue['id']}.{seed}.wav", spec, provider="music"))
         return units

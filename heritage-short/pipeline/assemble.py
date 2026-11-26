@@ -4,7 +4,7 @@ For each language it builds a timeline from the measured narration (picture is f
 the voice, ADR-010), picks each shot's clip (a Wan clip if one is cached, otherwise Ken
 Burns), ducks the score under the narration, burns in English subtitles, normalises the
 loudness, adds the AI end card and exports both orientations. `radio_cut` makes the
-user-test prototype: narration over a temp drone on black, with subtitles."""
+user-test prototype: narration over the score (the temp drone until a take is rendered) on black, with subtitles."""
 from __future__ import annotations
 
 import json
@@ -26,7 +26,7 @@ ORIENTS = {"vertical": "9x16", "horizontal": "16x9"}
 # libass scales these to the frame (an SRT's script size is 384x288). The vertical margins keep
 # subtitles clear of the buttons phone apps draw along the bottom and right of the frame.
 STYLE = {
-    "vertical": "FontName=DejaVu Sans,FontSize=9,Outline=1.2,Shadow=0,MarginV=56,MarginL=40,MarginR=40,Alignment=2",
+    "vertical": "FontName=DejaVu Sans,FontSize=10,Outline=1.3,Shadow=0,MarginV=56,MarginL=20,MarginR=20,Alignment=2",
     "horizontal": "FontName=DejaVu Sans,FontSize=15,Outline=1.2,Shadow=0,MarginV=18,MarginL=30,MarginR=30,Alignment=2",
 }
 
@@ -64,20 +64,22 @@ def build_timeline(ctx: Ctx, lang: str, have: dict) -> dict:
             "total_s": round(t + end, 3)}
 
 
-def _pick_clip(shot: dict, orient: str, have: dict) -> tuple[Path, str]:
+def _pick_clip(shot: dict, orient: str, have: dict, fill: bool = False) -> tuple[Path, str]:
     clip = have.get(("shots", f"{shot['id']}.i2v"))
     if clip is not None:
         return clip, "i2v"
-    clip = have.get(("shots", f"{shot['id']}.kb.{orient[0]}"))
+    # With fill on, the 16:9 film uses the vertical Ken Burns clip on a blurred fill, like the Wan
+    # clips: a centre crop of a 9:16 keyframe kept only the middle third and cut off the faces.
+    clip = have.get(("shots", f"{shot['id']}.kb.{'v' if fill else orient[0]}"))
     if clip is None:
         raise AssemblyError(f"no picture for {shot['id']} ({orient}); run `film render` first")
     return clip, "kenburns"
 
 
-def _shot_chain(i: int, kind: str, orient: str, w: int, h: int, length: float, fps: int) -> str:
+def _shot_chain(i: int, kind: str, orient: str, w: int, h: int, length: float, fps: int, fill: bool = False) -> str:
     tail = (f"tpad=stop_mode=clone:stop_duration={length:.3f},trim=duration={length:.3f},"
             f"setpts=PTS-STARTPTS,fps={fps},format=yuv420p,setsar=1[v{i}]")
-    if kind == "i2v" and orient == "horizontal":      # vertical master into 16:9: blurred fill (ADR-011)
+    if orient == "horizontal" and (kind == "i2v" or fill):   # vertical master into 16:9: blurred fill (ADR-011)
         return (f"[{i}:v]split=2[b{i}][f{i}];"
                 f"[b{i}]scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},boxblur=20:2[bg{i}];"
                 f"[f{i}]scale={w}:{h}:force_original_aspect_ratio=decrease[fg{i}];"
@@ -94,6 +96,19 @@ def _music(ctx: Ctx, have: dict, seconds: float, wd: Path) -> tuple[Path, str]:
     temp = wd / "temp_drone.wav"
     media.drone(temp, seconds + 1.0)
     return temp, "temp drone (no score rendered yet)"
+
+
+def music_offset(sb: dict, tl: dict) -> float:
+    """Seconds to shift the score so its anchor moment lands on the anchor shot's start in this
+    language's timeline: positive delays it, negative skips its opening. The same meaning runs
+    longer in Amharic than in English (E15), so a take whose quiet stretch sat under s09 in
+    English drifted under the end of s08 in Amharic until the score was anchored to the shot."""
+    cue = sb["music"]["cues"][0]
+    anchor = cue.get("anchor")
+    if not anchor:
+        return 0.0
+    start = next((s["start"] for s in tl["shots"] if s["id"] == anchor["shot"]), None)
+    return 0.0 if start is None else round(start - anchor["at_s"], 3)
 
 
 def _audio(ctx: Ctx, tl: dict, music: Path, first: int) -> tuple[list[str], list[str]]:
@@ -116,9 +131,12 @@ def _audio(ctx: Ctx, tl: dict, music: Path, first: int) -> tuple[list[str], list
     else:
         graph.append(f"anullsrc=r=48000:cl=stereo,atrim=0:{total:.3f}[voice]")
     args += ["-i", str(music)]
+    offset = music_offset(ctx.sb, tl)
+    shift = (f"adelay=delays={int(round(offset * 1000))}:all=1," if offset > 0.001 else
+             f"atrim=start={-offset:.3f},asetpts=PTS-STARTPTS," if offset < -0.001 else "")
     graph += [
         "[voice]asplit=2[vmix][vsc]",
-        f"[{idx}:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:{total:.3f},asetpts=PTS-STARTPTS,"
+        f"[{idx}:a]aformat=sample_rates=48000:channel_layouts=stereo,{shift}atrim=0:{total:.3f},asetpts=PTS-STARTPTS,"
         f"apad=whole_dur={total:.3f},volume={a['music_gain']},afade=t=in:st=0:d=1.5,"
         f"afade=t=out:st={max(0.0, total - 3):.3f}:d=3[music]",
         f"[music][vsc]sidechaincompress=threshold={a['duck_threshold']}:ratio={a['duck_ratio']}:"
@@ -173,7 +191,27 @@ def _save_text_outputs(ctx: Ctx, tl: dict, srt: Path, lang: str, orient: str) ->
     shutil.copy(srt, ctx.ws.outputs / "subtitles" / f"{lang}_{ORIENTS[orient]}.en.srt")
 
 
+def settle_loudness(ctx: Ctx, out: Path) -> dict:
+    """Second pass on a finished export: one-pass loudnorm lands short of the target when it
+    also has to respect the true-peak ceiling (the English film measured -15.2 LUFS against
+    -14). Measure, apply the missing gain, and limit the peaks, copying the video untouched.
+    Only runs when the export is more than 0.5 LU off."""
+    a = ctx.cfg["audio"]
+    first = media.loudness(out)
+    if first["integrated_lufs"] is None or abs(first["integrated_lufs"] - a["target_lufs"]) <= 0.5:
+        return {"loudness_pass2_db": 0.0}
+    gain = round(a["target_lufs"] - first["integrated_lufs"], 2)
+    limit = round(10 ** (a["true_peak_db"] / 20), 4)
+    tmp = out.with_name(f".loud-{out.name}")
+    media.ffmpeg(["-i", str(out), "-map", "0", "-c:v", "copy",
+                  "-af", f"volume={gain}dB,alimiter=limit={limit}:level=false:attack=5:release=50,aresample=48000",
+                  "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(tmp)])
+    tmp.replace(out)
+    return {"loudness_pass2_db": gain}
+
+
 def _measure(ctx: Ctx, unit: str, out: Path, tl: dict, extra: dict) -> dict:
+    extra = {**extra, **settle_loudness(ctx, out)}
     record = {"stage": "assemble", "unit": unit, "output": ctx.ws.rel(out),
               "duration_s": round(media.probe_duration(out), 3), "planned_s": tl["total_s"],
               **media.loudness(out), **extra}
@@ -192,11 +230,12 @@ def export(ctx: Ctx, lang: str, orient: str, have: dict) -> dict:
         cards = write_srt(ctx.sb, tl, wd / "subs.srt", sub["max_chars"][orient], sub["max_lines"])
         args, graph, kinds = [], [], {}
         shots = ctx.sb["shots"]
+        fill = ctx.cfg["delivery"].get("horizontal_kenburns", "crop") == "fill"
         for i, (shot, entry) in enumerate(zip(shots, tl["shots"])):
-            clip, kind = _pick_clip(shot, orient, have)
+            clip, kind = _pick_clip(shot, orient, have, fill)
             kinds[shot["id"]] = kind
             args += ["-i", str(clip)]
-            graph.append(_shot_chain(i, kind, orient, w, h, entry["length"], fps))
+            graph.append(_shot_chain(i, kind, orient, w, h, entry["length"], fps, fill))
         n, end = len(shots), tl["end_card"]["length"]
         _end_card(ctx.sb["end_card"]["lines"], (w, h), wd / "endcard.png")
         args += ["-loop", "1", "-framerate", str(fps), "-t", f"{end:.3f}", "-i", str(wd / "endcard.png")]
@@ -224,13 +263,15 @@ def radio_cut(ctx: Ctx, lang: str, have: dict) -> dict:
     with _workdir() as wd:
         cards = write_srt(ctx.sb, tl, wd / "subs.srt", sub["max_chars"]["vertical"], sub["max_lines"])
         subs = f",subtitles=filename=subs.srt:fontsdir=fonts:force_style='{STYLE['vertical']}'" if cards else ""
-        drone = wd / "temp_drone.wav"
-        media.drone(drone, total + 1.0)
-        audio_args, audio_graph = _audio(ctx, tl, drone, first=0)
+        # The pinned score take if one is rendered (else the first take), the temp drone until then,
+        # exactly as the film itself chooses, so a later test hears the real music under the voice.
+        music, label = _music(ctx, have, total, wd)
+        audio_args, audio_graph = _audio(ctx, tl, music, first=0)
         video = f"color=c=black:s={w}x{h}:r={fps}:d={total:.3f},format=yuv420p{subs}[vout]"
         media.ffmpeg([*audio_args, "-filter_complex", ";".join([video, *audio_graph]),
                       *_encode_args(ctx, total, out)], cwd=wd)
-    return _measure(ctx, f"radio.{lang}", out, tl, {"music": "temp drone", "subtitle_cards": cards})
+    return _measure(ctx, f"radio.{lang}", out, tl, {"music": label, "music_offset_s": music_offset(ctx.sb, tl),
+                                                   "subtitle_cards": cards})
 
 
 def assemble(ctx: Ctx, outcomes: list[Outcome], langs=None, orients=None) -> list[dict]:

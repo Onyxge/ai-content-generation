@@ -44,6 +44,8 @@ class Ctx:
     cfg: dict
     providers: dict
     log: RunLog
+    actor: str = "pipeline"                      # who asked: the pipeline, or an agent exploring (ADR-017)
+    langs: tuple[str, ...] | None = None         # narrow per-language units (e.g. English first); None = all
 
 
 class Stage:
@@ -131,13 +133,14 @@ def _build(stage: Stage, unit: Unit, ctx: Ctx, key: str, results: dict, exhauste
         info = info or {}
         ok = status == "ok"
         ctx.log.model_call(
-            stage=stage.name, unit=unit.id, attempt=n,
-            provider=provider.name, model=info.get("model", provider.model),
+            stage=stage.name, unit=unit.id, attempt=n, actor=ctx.actor,
+            provider=info.get("provider", getattr(err, "provider", provider.name)),
+            model=info.get("model", provider.model),
             params={k: v for k, v in unit.spec.items() if k not in TEXT_FIELDS and k != "seed"} | info.get("params", {}),
             seed=unit.spec.get("seed"),
             prompt_sha=sha256_text(text)[:12] if text else None,
             cache_key=key[:12], status=status, latency_ms=ms,
-            gpu_s=info.get("gpu_s"), cost_usd_list=info.get("cost_usd_list"),
+            gpu_s=info.get("gpu_s"), cost_usd_list=info.get("cost_usd_list"), cost=info.get("cost"),
             output=ctx.ws.rel(unit.out) if ok else None,
             output_sha=sha256_file(tmp)[:12] if ok else None,
             error=str(err)[:300] if err else None,
@@ -157,7 +160,7 @@ def _build(stage: Stage, unit: Unit, ctx: Ctx, key: str, results: dict, exhauste
         return Outcome(unit, "failed", key, f"{e.status}: {e}")
     os.replace(tmp, unit.out)          # only a complete file ever gets the real name
     write_sidecar(unit.out, key, {"stage": stage.name, "unit": unit.id, "run_id": ctx.ws.run_id,
-                                  "provider": getattr(provider, "name", "local"),
+                                  "provider": info.get("provider", getattr(provider, "name", "local")),
                                   "model": info.get("model", getattr(provider, "model", "ffmpeg")),
                                   "seed": unit.spec.get("seed")})
     return Outcome(unit, "built", key)

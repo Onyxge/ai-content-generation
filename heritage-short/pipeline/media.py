@@ -15,11 +15,39 @@ FONT_REGULAR = FONTS / "DejaVuSans.ttf"
 FONT_BOLD = FONTS / "DejaVuSans-Bold.ttf"
 
 
+# Homebrew installs `ffmpeg-full` keg-only (not on PATH, because it conflicts with the slim
+# `ffmpeg`), so we look for it first. FFMPEG_BIN, a directory, overrides both (FAILURES.md F2).
+KEG_DIRS = (Path("/opt/homebrew/opt/ffmpeg-full/bin"), Path("/usr/local/opt/ffmpeg-full/bin"))
+
+
 def _exe(name: str) -> str:
+    import os
+
+    dirs = ([Path(os.environ["FFMPEG_BIN"])] if os.environ.get("FFMPEG_BIN") else []) + list(KEG_DIRS)
+    for d in dirs:
+        if (d / name).exists():
+            return str(d / name)
     path = shutil.which(name)
     if not path:
         raise RuntimeError(f"{name} is not on PATH. Install FFmpeg (see README) and run again.")
     return path
+
+
+# Filters the stages and assembly use. Homebrew's slim `ffmpeg` formula ships without libass,
+# so `subtitles` is missing there; `ffmpeg-full` has everything (FAILURES.md F2).
+REQUIRED_FILTERS = ("afade", "amix", "anullsrc", "apad", "boxblur", "concat", "crop", "ebur128", "loudnorm",
+                    "overlay", "scale", "sidechaincompress", "sine", "subtitles", "tremolo", "zoompan")
+
+
+def missing_filters() -> list[str]:
+    """Required FFmpeg filters this FFmpeg build lacks (all of them if FFmpeg isn't installed)."""
+    try:
+        _exe("ffmpeg")
+    except RuntimeError:
+        return list(REQUIRED_FILTERS)
+    out = subprocess.run([_exe("ffmpeg"), "-hide_banner", "-filters"], capture_output=True, text=True).stdout
+    present = {line.split()[1] for line in out.splitlines() if len(line.split()) > 2 and line.startswith(" ")}
+    return [f for f in REQUIRED_FILTERS if f not in present]
 
 
 def ffmpeg(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess:

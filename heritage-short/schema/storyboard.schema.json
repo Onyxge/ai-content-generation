@@ -5,7 +5,17 @@
   "description": "The only contract between pipeline stages (ADR-001). Cross-field rules live in pipeline/contract.py.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "meta", "style", "characters", "references", "voices", "shots", "music", "end_card"],
+  "required": [
+    "version",
+    "meta",
+    "style",
+    "characters",
+    "references",
+    "voices",
+    "shots",
+    "music",
+    "end_card"
+  ],
   "properties": {
     "version": {
       "type": "integer",
@@ -15,107 +25,290 @@
     "meta": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["title", "logline", "languages", "primary", "runtime_s"],
+      "required": [
+        "title",
+        "logline",
+        "languages",
+        "primary",
+        "runtime_s"
+      ],
       "properties": {
-        "title": {"type": "string", "minLength": 1},
-        "logline": {"type": "string", "minLength": 1},
-        "languages": {"type": "array", "items": {"$ref": "#/$defs/lang"}, "minItems": 1, "uniqueItems": true},
-        "primary": {"$ref": "#/$defs/lang", "description": "The version submitted as main (ADR-015)."},
-        "runtime_s": {"type": "array", "items": {"type": "number", "minimum": 0}, "minItems": 2, "maxItems": 2}
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "logline": {
+          "type": "string",
+          "minLength": 1
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/lang"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "primary": {
+          "$ref": "#/$defs/lang",
+          "description": "The version submitted as main (ADR-015)."
+        },
+        "runtime_s": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
       }
     },
     "style": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["block"],
+      "required": [
+        "block"
+      ],
       "properties": {
-        "block": {"type": "string", "minLength": 1, "description": "Appended to every image prompt."}
+        "block": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Appended to every image prompt."
+        }
       }
     },
-    "characters": {"type": "array", "items": {"$ref": "#/$defs/character"}},
-    "references": {"type": "array", "items": {"$ref": "#/$defs/reference"}},
+    "characters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/character"
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/reference"
+      }
+    },
     "voices": {
       "type": "object",
       "additionalProperties": false,
       "minProperties": 1,
       "properties": {
-        "en": {"$ref": "#/$defs/voice"},
-        "am": {"$ref": "#/$defs/voice"}
+        "en": {
+          "$ref": "#/$defs/voice"
+        },
+        "am": {
+          "$ref": "#/$defs/voice"
+        }
       }
     },
-    "shots": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/shot"}},
+    "shots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/shot"
+      }
+    },
     "music": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["cues"],
+      "required": [
+        "cues"
+      ],
       "properties": {
-        "cues": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/cue"}}
+        "cues": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/cue"
+          }
+        }
       }
     },
     "end_card": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["lines", "duration_s"],
+      "required": [
+        "lines",
+        "duration_s"
+      ],
       "properties": {
-        "lines": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
-        "duration_s": {"type": "number", "minimum": 2, "maximum": 5}
+        "lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "duration_s": {
+          "type": "number",
+          "minimum": 2,
+          "maximum": 5
+        }
       }
     }
   },
   "$defs": {
-    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
-    "lang": {"enum": ["en", "am"]},
-    "seed": {"type": "integer", "minimum": 0},
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "lang": {
+      "enum": [
+        "en",
+        "am"
+      ]
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
     "character": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "description", "real_person"],
+      "required": [
+        "id",
+        "description",
+        "real_person"
+      ],
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "description": {"type": "string", "minLength": 1, "description": "Attached to every prompt that shows this character."},
-        "real_person": {"type": "boolean", "description": "True if the character depicts a real person (consent gate, ADR-014)."},
-        "consent_id": {"type": "string", "pattern": "^C[0-9]+$"},
-        "reference": {"$ref": "#/$defs/id"}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Attached to every prompt that shows this character."
+        },
+        "real_person": {
+          "type": "boolean",
+          "description": "True if the character depicts a real person (consent gate, ADR-014)."
+        },
+        "consent_id": {
+          "type": "string",
+          "pattern": "^C[0-9]+$"
+        },
+        "reference": {
+          "$ref": "#/$defs/id"
+        }
       }
     },
     "reference": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "kind", "prompt", "seeds"],
+      "required": [
+        "id",
+        "kind",
+        "prompt",
+        "seeds"
+      ],
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "kind": {"enum": ["character", "place", "style"]},
-        "characters": {"type": "array", "items": {"$ref": "#/$defs/id"}},
-        "prompt": {"type": "string", "minLength": 1},
-        "seeds": {"type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/seed"}},
-        "selected": {"$ref": "#/$defs/seed", "description": "The pinned option (ADR-009)."}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "character",
+            "place",
+            "style"
+          ]
+        },
+        "characters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "seeds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/seed"
+          }
+        },
+        "selected": {
+          "$ref": "#/$defs/seed",
+          "description": "The pinned option (ADR-009)."
+        }
       }
     },
     "voice": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["model", "voice"],
+      "required": [
+        "model",
+        "voice"
+      ],
       "properties": {
-        "model": {"type": "string", "minLength": 1},
-        "voice": {"type": "string", "minLength": 1},
-        "style": {"type": "string", "description": "Delivery instructions, sent separately from the words, because TTS reads its text verbatim."}
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "voice": {
+          "type": "string",
+          "minLength": 1
+        },
+        "style": {
+          "type": "string",
+          "description": "Delivery instructions, sent separately from the words, because TTS reads its text verbatim."
+        }
       }
     },
     "motion": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["mode", "prompt"],
+      "required": [
+        "mode",
+        "prompt"
+      ],
       "properties": {
-        "mode": {"enum": ["i2v", "kenburns", "still"]},
-        "fallback": {"enum": ["kenburns", "still"]},
-        "prompt": {"type": "string", "minLength": 1, "description": "Motion and camera only; the keyframe already holds the subject."},
-        "seed": {"$ref": "#/$defs/seed"},
+        "mode": {
+          "enum": [
+            "i2v",
+            "kenburns",
+            "still"
+          ]
+        },
+        "fallback": {
+          "enum": [
+            "kenburns",
+            "still"
+          ]
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Motion and camera only; the keyframe already holds the subject."
+        },
+        "seed": {
+          "$ref": "#/$defs/seed"
+        },
         "kenburns": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "zoom": {"enum": ["in", "out", "none"]},
-            "pan": {"enum": ["none", "left", "right"]}
+            "zoom": {
+              "enum": [
+                "in",
+                "out",
+                "none"
+              ]
+            },
+            "pan": {
+              "enum": [
+                "none",
+                "left",
+                "right"
+              ]
+            }
           }
         }
       }
@@ -123,46 +316,166 @@
     "shot": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "reason", "beat", "size", "duration_s", "image_prompt", "keyframe_seed", "motion", "narration"],
+      "required": [
+        "id",
+        "reason",
+        "beat",
+        "size",
+        "duration_s",
+        "image_prompt",
+        "keyframe_seed",
+        "motion",
+        "narration"
+      ],
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "reason": {"type": "string", "minLength": 10, "description": "Why this shot exists, in one sentence."},
-        "beat": {"type": "string", "minLength": 1},
-        "size": {"enum": ["extreme wide", "wide", "medium", "medium close-up", "close-up", "extreme close-up", "insert"]},
-        "duration_s": {"type": "number", "minimum": 2, "maximum": 15, "description": "Target length; assembly lengthens it if the narration needs more."},
-        "characters": {"type": "array", "items": {"$ref": "#/$defs/id"}},
-        "references": {"type": "array", "maxItems": 4, "items": {"$ref": "#/$defs/id"}},
-        "image_prompt": {"type": "string", "minLength": 1},
-        "keyframe_seed": {"$ref": "#/$defs/seed"},
-        "motion": {"$ref": "#/$defs/motion"},
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Why this shot exists, in one sentence."
+        },
+        "beat": {
+          "type": "string",
+          "minLength": 1
+        },
+        "size": {
+          "enum": [
+            "extreme wide",
+            "wide",
+            "medium",
+            "medium close-up",
+            "close-up",
+            "extreme close-up",
+            "insert"
+          ]
+        },
+        "duration_s": {
+          "type": "number",
+          "minimum": 2,
+          "maximum": 15,
+          "description": "Target length; assembly lengthens it if the narration needs more."
+        },
+        "characters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "references": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "image_prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyframe_seed": {
+          "$ref": "#/$defs/seed"
+        },
+        "motion": {
+          "$ref": "#/$defs/motion"
+        },
         "narration": {
           "type": "object",
           "additionalProperties": false,
           "description": "Spoken words only, per language. An empty or missing line means a silent shot.",
           "properties": {
-            "en": {"type": "string"},
-            "am": {"type": "string"}
+            "en": {
+              "type": "string"
+            },
+            "am": {
+              "type": "string"
+            }
           }
         },
-        "subtitle_en": {"type": "string", "description": "Overrides narration.en as the English subtitle."}
+        "subtitle_en": {
+          "type": "string",
+          "description": "Overrides narration.en as the English subtitle."
+        }
       }
     },
     "cue": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "from", "to", "caption", "instrumental", "length_s", "seeds"],
+      "required": [
+        "id",
+        "from",
+        "to",
+        "caption",
+        "instrumental",
+        "length_s",
+        "seeds"
+      ],
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "from": {"$ref": "#/$defs/id"},
-        "to": {"$ref": "#/$defs/id"},
-        "caption": {"type": "string", "minLength": 1, "description": "Style, mood, instruments, texture. Tempo and key have their own fields."},
-        "instrumental": {"type": "boolean"},
-        "bpm": {"type": "integer", "minimum": 40, "maximum": 200},
-        "key": {"type": "string"},
-        "length_s": {"type": "number", "minimum": 10, "maximum": 240, "description": "Fixed length, longer than the film; assembly trims and fades it."},
-        "seeds": {"type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/seed"}},
-        "selected": {"$ref": "#/$defs/seed"},
-        "why": {"type": "string"}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "from": {
+          "$ref": "#/$defs/id"
+        },
+        "to": {
+          "$ref": "#/$defs/id"
+        },
+        "caption": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Style, mood, instruments, texture. Tempo and key have their own fields."
+        },
+        "instrumental": {
+          "type": "boolean"
+        },
+        "bpm": {
+          "type": "integer",
+          "minimum": 40,
+          "maximum": 200
+        },
+        "key": {
+          "type": "string"
+        },
+        "length_s": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 240,
+          "description": "Fixed length, longer than the film; assembly trims and fades it."
+        },
+        "seeds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/seed"
+          }
+        },
+        "selected": {
+          "$ref": "#/$defs/seed"
+        },
+        "why": {
+          "type": "string"
+        },
+        "anchor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "shot",
+            "at_s"
+          ],
+          "description": "Line the take's at_s moment up with the start of this shot, in every language (the score is shifted per language).",
+          "properties": {
+            "shot": {
+              "$ref": "#/$defs/id"
+            },
+            "at_s": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
       }
     }
   }

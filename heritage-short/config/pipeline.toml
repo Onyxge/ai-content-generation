@@ -1,32 +1,41 @@
 # Settings that are not part of the story. A value used by a unit is part of that
 # unit's cache key, so changing it regenerates only the units that use it.
 
+[text]
+# Agents' structured-output and vision calls (ADR-019). Ids checked against the live Gemini API by `make smoke`.
+model = "gemini-3.8-flash"
+lite_model = "gemini-3.5-flash-lite"   # there is no 3.8 Flash-Lite text model (docs, 2026-11-25)
+
 [images]
 model = "@cf/black-forest-labs/flux-2-klein-4b"
 fallback_model = "@cf/black-forest-labs/flux-1-schnell"
 reference_size = [1024, 1024]
 keyframe_size = [1080, 1920]   # vertical master with room to crop 16:9 (ADR-011)
 reference_upload_max = 504     # klein needs reference inputs under 512x512
+reference_view = "front"       # condition keyframes on the sheet's front view only (FAILURES.md F10)
 
 [video]
 fps = 24
 i2v_model = "Wan2.2-TI2V-5B"
 i2v_size = [480, 832]          # 480p draft; spike S1 decides (E7)
 i2v_frames = 121               # 4n+1, about 5 s at 24 fps
+i2v_steps = 50                 # Wan 2.2 default; spike S1 measures what a T4 can afford (part of each clip's key)
 kenburns_headroom_s = 1.5      # extra seconds so assembly can lengthen a shot for the voice
 
 [music]
 model = "ACE-Step-1.5"
+steps = 8                      # the turbo model's default (part of each candidate's key)
 
 [delivery]
 vertical = [720, 1280]
 horizontal = [1280, 720]
+horizontal_kenburns = "fill"   # 16:9 shows the vertical master on a blurred fill, never a centre crop (ADR-011)
 crf = 20
 preset = "medium"
 
 [audio]
 target_lufs = -14.0
-true_peak_db = -1.0
+true_peak_db = -1.5            # loudnorm aims here so the measured true peak lands at or under the -1 dB ceiling (one-pass loudnorm overshot to -0.9)
 music_gain = 0.35              # score level before ducking (E12 tunes this)
 lead_in_s = 0.4                # silence before each line
 tail_s = 0.6                   # breath after each line
@@ -40,3 +49,38 @@ duck_release_ms = 1500
 # readable size (checked on a rendered frame, build-log Entry 2).
 max_chars = { vertical = 28, horizontal = 42 }
 max_lines = 2
+
+[smoke]
+# `make smoke`: one tiny call per provider. Model and voice ids are what smoke checks first.
+text_prompt = "Reply with ok set to true and word set to 'radio'."
+speech_text = "Testing the narrator."
+speech_model = "gemini-3.8-flash-tts"
+speech_voice = "Kore"
+speech_style = "calm and warm"
+addis_text = "ሰላም፣ ይህ የድምፅ ሙከራ ነው።"
+addis_voice = "am-hamen"
+image_prompt = "a small radio on a wooden table, warm morning light"
+image_size = [256, 256]
+
+[story]
+# The story agent (A2). Languages, the main version, the runtime and the voices are Y's
+# decisions (ADR-018): the chain copies them into the draft and never chooses them.
+languages = ["en", "am"]
+primary = "en"
+runtime_s = [60, 90]
+end_card_s = 3
+min_shots = 8
+max_shots = 12
+max_i2v = 4                    # Wan clips are the scarcest thing we make (spike S1 may lower this)
+wps = 2.4                      # words a second for English narration until the radio cut measures it
+end_card = ["Made with AI", "Inspired by a family story. Some scenes are imagined.", "Images: FLUX.2 klein · Motion: Wan 2.2 · Voice: Gemini TTS · Score: ACE-Step 1.5"]
+
+[story.voices.en]
+model = "gemini-3.8-flash-tts"
+voice = "Kore"
+style = "warm, unhurried, intimate, like telling a story to family"
+
+[story.voices.am]
+model = "gemini-3.8-flash-tts"
+voice = "Kore"
+style = "warm, unhurried, intimate, like telling a story to family"

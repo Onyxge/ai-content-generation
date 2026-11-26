@@ -24,14 +24,16 @@ class Shots(Stage):
             still = motion["mode"] == "still" or motion.get("fallback") == "still"
             zoom = "none" if still else kb.get("zoom", "in")
             pan = "none" if still else kb.get("pan", "none")
-            for orient in ("vertical", "horizontal"):
+            fill = ctx.cfg["delivery"].get("horizontal_kenburns", "crop") == "fill"
+            for orient in (("vertical",) if fill else ("vertical", "horizontal")):   # fill: 16:9 reuses the vertical clip
                 spec = {"kind": "kenburns", "orient": orient, "size": delivery[orient], "fps": video["fps"],
                         "duration_s": shot["duration_s"] + video["kenburns_headroom_s"], "zoom": zoom, "pan": pan}
                 units.append(Unit(self.name, f"{shot['id']}.kb.{orient[0]}",
                                   ctx.ws.outputs / "shots" / f"{shot['id']}.kb.{orient[0]}.mp4", spec, deps))
             if motion["mode"] == "i2v":
                 spec = {"kind": "i2v", "prompt": motion["prompt"], "seed": motion.get("seed", 0),
-                        "size": video["i2v_size"], "frames": video["i2v_frames"], "fps": video["fps"]}
+                        "size": video["i2v_size"], "frames": video["i2v_frames"], "fps": video["fps"],
+                        "steps": video["i2v_steps"]}
                 units.append(Unit(self.name, f"{shot['id']}.i2v",
                                   ctx.ws.outputs / "shots" / f"{shot['id']}.i2v.mp4", spec, deps, provider="video"))
         return units

@@ -1,22 +1,29 @@
 # Same settings as config/pipeline.toml at thumbnail sizes, so the full mock build
 # (including assembly) runs in seconds.
 
+[text]
+model = "gemini-3.8-flash"
+lite_model = "gemini-3.5-flash-lite"
+
 [images]
 model = "@cf/black-forest-labs/flux-2-klein-4b"
 fallback_model = "@cf/black-forest-labs/flux-1-schnell"
 reference_size = [96, 96]
 keyframe_size = [108, 192]
 reference_upload_max = 504
+reference_view = "front"       # condition keyframes on the sheet's front view only (FAILURES.md F10)
 
 [video]
 fps = 24
 i2v_model = "Wan2.2-TI2V-5B"
 i2v_size = [72, 128]
 i2v_frames = 49
+i2v_steps = 50                 # Wan 2.2 default; spike S1 measures what a T4 can afford (part of each clip's key)
 kenburns_headroom_s = 1.0
 
 [music]
 model = "ACE-Step-1.5"
+steps = 8                      # the turbo model's default (part of each candidate's key)
 
 [delivery]
 vertical = [144, 256]
@@ -40,3 +47,37 @@ duck_release_ms = 1500
 # readable size (checked on a rendered frame, build-log Entry 2).
 max_chars = { vertical = 28, horizontal = 42 }
 max_lines = 2
+
+[smoke]
+text_prompt = "Reply with ok set to true and word set to 'radio'."
+speech_text = "Testing the narrator."
+speech_model = "gemini-3.8-flash-tts"
+speech_voice = "Kore"
+speech_style = "calm and warm"
+addis_text = "ሰላም፣ ይህ የድምፅ ሙከራ ነው።"
+addis_voice = "am-hamen"
+image_prompt = "a small radio on a wooden table, warm morning light"
+image_size = [64, 64]
+
+[story]
+# The story agent (A2). Languages, the main version, the runtime and the voices are Y's
+# decisions (ADR-018): the chain copies them into the draft and never chooses them.
+languages = ["en", "am"]
+primary = "en"
+runtime_s = [60, 90]
+end_card_s = 3
+min_shots = 8
+max_shots = 12
+max_i2v = 4                    # Wan clips are the scarcest thing we make (spike S1 may lower this)
+wps = 2.4                      # words a second for English narration until the radio cut measures it
+end_card = ["Made with AI", "Images: FLUX.2 klein · Motion: Wan 2.2 · Voice: Gemini TTS · Score: ACE-Step 1.5"]
+
+[story.voices.en]
+model = "gemini-3.8-flash-tts"
+voice = "Kore"
+style = "warm, unhurried, intimate, like telling a story to family"
+
+[story.voices.am]
+model = "gemini-3.8-flash-tts"
+voice = "Kore"
+style = "warm, unhurried, intimate, like telling a story to family"

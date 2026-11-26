@@ -22,6 +22,18 @@ class TransientError(ProviderError):
         self.retry_after = retry_after
 
 
+class RepairableError(TransientError):
+    """An agent's answer that parsed but broke a rule the code checks (too few shots, a line over
+    its word budget). Retried at once with the problems fed back, so each repair is its own
+    logged attempt (evaluator-optimizer, ADR-019)."""
+
+    status = "repair"
+
+    def __init__(self, problems: list[str]):
+        super().__init__("; ".join(problems), retry_after=0.0)
+        self.problems = problems
+
+
 class DailyQuotaError(ProviderError):
     """Daily allowance used up: stop calling this provider for the rest of the run."""
 
