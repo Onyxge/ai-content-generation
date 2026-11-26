@@ -1,0 +1,10 @@
+{
+  "cache_key": "50fbf9354de36a919934e91edacabd2ba22c1135ed2751e8105e57612a977a82",
+  "model": "addis-voices-2",
+  "output_sha": "fd4de223b378cb207f996649106aa5893ea67f52c2c7fd9f961b707d8e2dafe7",
+  "provider": "addis",
+  "run_id": "r-20261126-142654-95a2",
+  "seed": null,
+  "stage": "narration",
+  "unit": "s10.am"
+}

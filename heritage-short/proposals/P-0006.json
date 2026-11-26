@@ -1,0 +1,52 @@
+{
+  "id": "P-0006",
+  "created": "2026-11-26T14:29:35+00:00",
+  "actor": "composer",
+  "rationale": "Drafted by Claude Code standing in for the composer agent. Y chose m1.13 because its quiet stretch (54.8-60.1 s) falls under s09, the grandmother line, in the English timeline. In Amharic the same meaning runs 3 s longer (E15): s09 starts at 56.5 s, so the silence would begin under the end of the toast line (s08) and the music would return halfway through s09. Anchoring the take's 54.8 s moment to the start of s09 keeps the silence under s09 in both languages: offset -0.008 s for English, +1.75 s for Amharic.",
+  "evidence": {
+    "experiment": "E15",
+    "timelines": {
+      "en": "s09 54.79-60.80",
+      "am": "s08 47.71-56.54, s09 56.54-63.58"
+    },
+    "score_silences": "54.8-60.1 and 65.7-68.5 s"
+  },
+  "patch": [
+    {
+      "op": "add",
+      "path": "/music/cues/m1/anchor",
+      "value": {
+        "shot": "s09",
+        "at_s": 54.8
+      }
+    }
+  ],
+  "base_sha": "c314e1586752",
+  "kinds": [
+    "composer"
+  ],
+  "autonomy": "propose",
+  "changes": [
+    {
+      "path": "/music/cues/m1/anchor",
+      "before": {
+        "missing": true
+      },
+      "after": {
+        "value": {
+          "shot": "s09",
+          "at_s": 54.8
+        }
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {
+      "video": 3
+    },
+    "local_renders": 0
+  },
+  "confirmed": true
+}

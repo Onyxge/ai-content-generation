@@ -1,0 +1,67 @@
+{
+  "id": "P-0001",
+  "created": "2026-11-26T13:17:51+00:00",
+  "actor": "Y",
+  "rationale": "Y picked take m1.13 by ear from three radio cuts, one per take; a colleague preferred it too.",
+  "evidence": {
+    "experiment": "E10",
+    "listened": [
+      "build/review/radio_en_take_m1.11.mp4",
+      "build/review/radio_en_take_m1.12.mp4",
+      "build/review/radio_en_take_m1.13.mp4"
+    ],
+    "measured": {
+      "m1.11": "-14.3 LUFS, 1 gap (end)",
+      "m1.12": "-14.9 LUFS, no gaps",
+      "m1.13": "-16.3 LUFS, gaps 54.8-60.1 s and 65.7-68.5 s"
+    },
+    "timeline_en": "the gaps fall under s09 (54.8-60.8 s, the grandmother line) and the last words of s10 (ends 67.7 s)"
+  },
+  "patch": [
+    {
+      "op": "add",
+      "path": "/music/cues/m1/selected",
+      "value": 13
+    },
+    {
+      "op": "add",
+      "path": "/music/cues/m1/why",
+      "value": "Chosen by ear by Y, and preferred by a colleague: the quietest take (-16.3 LUFS). It falls silent under the grandmother line (s09) and the last words of s10, so the music steps back for the family memory and the final line, then returns for the end card."
+    }
+  ],
+  "base_sha": "73bc45348315",
+  "kinds": [
+    "Y",
+    "music_pick"
+  ],
+  "autonomy": "auto",
+  "changes": [
+    {
+      "path": "/music/cues/m1/selected",
+      "before": {
+        "missing": true
+      },
+      "after": {
+        "value": 13
+      }
+    },
+    {
+      "path": "/music/cues/m1/why",
+      "before": {
+        "missing": true
+      },
+      "after": {
+        "value": "Chosen by ear by Y, and preferred by a colleague: the quietest take (-16.3 LUFS). It falls silent under the grandmother line (s09) and the last words of s10, so the music steps back for the family memory and the final line, then returns for the end card."
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {
+      "speech": 10
+    },
+    "local_renders": 4
+  },
+  "confirmed": true
+}

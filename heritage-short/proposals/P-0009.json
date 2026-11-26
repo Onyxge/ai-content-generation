@@ -1,0 +1,71 @@
+{
+  "id": "P-0009",
+  "created": "2026-11-26T16:51:02+00:00",
+  "actor": "story",
+  "rationale": "Drafted by Claude Code standing in for the story agent, from user test 2. T2: 'I wanted a little more context near the beginning.' None of the three testers' summaries mentions the server, the emperor or the name: the feeling lands, the story's setting doesn't. The opening line now says where we are, in both languages. s01 grows from 7 to 9 s so the longer line fits its word budget; the music anchor (P-0006) keeps the score's silence under s09.",
+  "evidence": {
+    "test": "DESIGN.md, user test 2, T2 (and the three summaries)",
+    "budget": "9 s shot: 19 words at 2.4 words a second, plus the lead-in and tail",
+    "amharic": "the prefix 'በአዲስ አበባ ቤተ መንግሥት' (in the palace in Addis Ababa) was added to the existing line; a native speaker checks it"
+  },
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/shots/s01/duration_s",
+      "value": 9
+    },
+    {
+      "op": "replace",
+      "path": "/shots/s01/narration/en",
+      "value": "For years, he served the emperor in his palace in Addis Ababa. They called him the honey wine server."
+    },
+    {
+      "op": "replace",
+      "path": "/shots/s01/narration/am",
+      "value": "በአዲስ አበባ ቤተ መንግሥት ለብዙ ዓመታት ንጉሠ ነገሥቱን አገለገለ። የጠጅ አሳላፊው እያሉ ይጠሩት ነበር።"
+    }
+  ],
+  "base_sha": "375c1fcf39ac",
+  "kinds": [
+    "story"
+  ],
+  "autonomy": "propose",
+  "changes": [
+    {
+      "path": "/shots/s01/duration_s",
+      "before": {
+        "value": 7
+      },
+      "after": {
+        "value": 9
+      }
+    },
+    {
+      "path": "/shots/s01/narration/en",
+      "before": {
+        "value": "For years, he served the emperor. They called him the honey wine server."
+      },
+      "after": {
+        "value": "For years, he served the emperor in his palace in Addis Ababa. They called him the honey wine server."
+      }
+    },
+    {
+      "path": "/shots/s01/narration/am",
+      "before": {
+        "value": "ለብዙ ዓመታት ንጉሠ ነገሥቱን አገለገለ። የጠጅ አሳላፊው እያሉ ይጠሩት ነበር።"
+      },
+      "after": {
+        "value": "በአዲስ አበባ ቤተ መንግሥት ለብዙ ዓመታት ንጉሠ ነገሥቱን አገለገለ። የጠጅ አሳላፊው እያሉ ይጠሩት ነበር።"
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {
+      "speech": 2
+    },
+    "local_renders": 1
+  },
+  "confirmed": true
+}

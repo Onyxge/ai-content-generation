@@ -1,0 +1,75 @@
+{
+  "id": "P-0002",
+  "created": "2026-11-26T13:22:44+00:00",
+  "actor": "Y",
+  "rationale": "E22: the first reference options drifted away from Ethiopian features (Tesfaye read South Asian or Latin in 3 of 4 seeds, the guest Mediterranean in all 4). The descriptions now name the features, skin tone, hair and period dress explicitly; the seeds stay the same so the change is the only difference.",
+  "evidence": {
+    "experiment": "E22",
+    "before": [
+      "build/review/ref_tesfaye_before.png",
+      "build/review/ref_banquet_guest_before.png",
+      "build/review/ref_great_emperor_before.png"
+    ]
+  },
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/characters/tesfaye/description",
+      "value": "a young Ethiopian Habesha man in his mid-twenties, warm dark-brown skin, short tightly curled black hair, a slender face with high cheekbones and a straight narrow nose, dark brown eyes; slim build; a plain white cotton server's tunic with a thin woven tibeb border at the cuffs, and white cotton trousers; quiet, watchful, dignified"
+    },
+    {
+      "op": "replace",
+      "path": "/characters/banquet_guest/description",
+      "value": "an Ethiopian Habesha nobleman in his fifties, warm brown skin, short grey-flecked tightly curled hair, a trimmed grey moustache, a full face; a heavy build; a black wool kaba cape over a white cotton tunic; a thin, dismissive smile"
+    },
+    {
+      "op": "replace",
+      "path": "/characters/great_emperor/description",
+      "value": "a short, elderly Ethiopian Habesha man, warm dark-brown skin, close-cropped white hair, clean-shaven; a very upright, composed posture and a calm, attentive gaze; a plain dark formal cloak over white; seen at a distance, from behind or in profile, never in close-up"
+    }
+  ],
+  "base_sha": "3ec21f55d085",
+  "kinds": [
+    "Y"
+  ],
+  "autonomy": "auto",
+  "changes": [
+    {
+      "path": "/characters/tesfaye/description",
+      "before": {
+        "value": "Young Ethiopian man in his twenties, slim build, close-cropped black hair, wearing a clean, plain white cotton server tunic and trousers, with quiet, watchful, dignified eyes."
+      },
+      "after": {
+        "value": "a young Ethiopian Habesha man in his mid-twenties, warm dark-brown skin, short tightly curled black hair, a slender face with high cheekbones and a straight narrow nose, dark brown eyes; slim build; a plain white cotton server's tunic with a thin woven tibeb border at the cuffs, and white cotton trousers; quiet, watchful, dignified"
+      }
+    },
+    {
+      "path": "/characters/banquet_guest/description",
+      "before": {
+        "value": "Older Ethiopian man in his fifties, heavy build, short peppered hair, dressed in a tailored dark formal cape over white linens, with a sharp, dismissive expression."
+      },
+      "after": {
+        "value": "an Ethiopian Habesha nobleman in his fifties, warm brown skin, short grey-flecked tightly curled hair, a trimmed grey moustache, a full face; a heavy build; a black wool kaba cape over a white cotton tunic; a thin, dismissive smile"
+      }
+    },
+    {
+      "path": "/characters/great_emperor/description",
+      "before": {
+        "value": "a short, elderly Ethiopian man with a very upright, composed posture and a calm, attentive gaze, in a plain dark formal cloak; seen at a distance, from behind or in profile, never in close-up"
+      },
+      "after": {
+        "value": "a short, elderly Ethiopian Habesha man, warm dark-brown skin, close-cropped white hair, clean-shaven; a very upright, composed posture and a calm, attentive gaze; a plain dark formal cloak over white; seen at a distance, from behind or in profile, never in close-up"
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {
+      "image": 12,
+      "speech": 10
+    },
+    "local_renders": 4
+  },
+  "confirmed": true
+}

@@ -36,8 +36,13 @@ def load(path: Path | str) -> dict:
 
 
 def schema_errors(sb: dict) -> list[str]:
-    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
-    found = sorted(Draft202012Validator(schema).iter_errors(sb), key=lambda e: [str(p) for p in e.absolute_path])
+    return json_problems(sb, json.loads(SCHEMA_PATH.read_text(encoding="utf-8")))
+
+
+def json_problems(data, schema: dict) -> list[str]:
+    """Every way `data` breaks `schema`, as 'path: message' lines. Used on the storyboard and on
+    every structured answer from a model, since Gemini silently ignores some keywords."""
+    found = sorted(Draft202012Validator(schema).iter_errors(data), key=lambda e: [str(p) for p in e.absolute_path])
     return [f"{'/'.join(map(str, e.absolute_path)) or '(root)'}: {e.message}" for e in found]
 
 
@@ -150,6 +155,8 @@ def lint(sb: dict, ethics_text: str = "") -> Report:
             r.errors.append(f"{where}: from and to must be shot ids")
         elif shot_ids.index(cue["from"]) > shot_ids.index(cue["to"]):
             r.errors.append(f"{where}: '{cue['from']}' comes after '{cue['to']}'")
+        if "anchor" in cue and cue["anchor"]["shot"] not in shot_ids:
+            r.errors.append(f"{where}: anchor shot '{cue['anchor']['shot']}' isn't a shot id")
         if "selected" in cue and cue["selected"] not in cue["seeds"]:
             r.errors.append(f"{where}: selected {cue['selected']} is not one of its seeds {cue['seeds']}")
         if cue["length_s"] < runtime:

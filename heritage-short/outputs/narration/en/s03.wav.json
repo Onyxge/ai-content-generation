@@ -1,0 +1,10 @@
+{
+  "cache_key": "6a96f037504f658f0f236a1eff1fb50fc362ffd4a89f7227c8779b164c8d9027",
+  "model": "gemini-3.8-flash-tts",
+  "output_sha": "d84b694f69b3e7d4aec188ea65361d0b8f4fa450bb16a7e56de6854479cafa6d",
+  "provider": "gemini",
+  "run_id": "r-20261125-215842-00b8",
+  "seed": null,
+  "stage": "narration",
+  "unit": "s03.en"
+}

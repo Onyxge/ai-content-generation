@@ -14,7 +14,7 @@ One entry per design decision. Status is Proposed until Y accepts it, Accepted a
 | 008 | Quota-aware execution: plan before spending | Proposed | `film plan`; the daily ledger comes with U3 |
 | 009 | Seeds: explore, pick, pin | Proposed; amended 2026-11-25 by ADR-017 | pinned seeds; `film explore` comes with A3 |
 | 010 | Narration-first timing; music cues anchored to shots | Proposed | `pipeline/assemble.py` |
-| 011 | Aspect strategy | Open, decide when spike S1 returns | the default (vertical master, blurred fill) |
+| 011 | Aspect strategy | Accepted 2026-11-26: vertical master; 16:9 = blurred fill for every shot | `assemble._shot_chain`, `delivery.horizontal_kenburns` |
 | 012 | Toolchain and roles | Proposed; amended 2026-11-25 | `pyproject.toml`, `Makefile` |
 | 013 | Privacy boundary for family material | Proposed | `.gitignore`, `docs/story/brief.template.md` |
 | 014 | Consent gate enforced in code | Proposed | lint reads ETHICS.md's consent table |
@@ -100,6 +100,14 @@ Consequences. Every GPU minute is still measured and logged, an interrupted sess
 
 Alternatives. CLI push only: Kaggle-only, and more to build before we know Wan works at all. Notebooks with pasted inputs: no cache and no logs.
 
+Amended 2026-11-26 (01:15), from a check of the current docs and code (build-log Entry 12):
+- **Wan runs through diffusers' `WanImageToVideoPipeline`, not the official repo.** The repo's attention asserts on FlashAttention 2, which a T4 (Turing) can't run, and its size check rejects 480p.
+- **Precision is fp16 with the VAE in fp32,** because a T4 emulates bf16 at about 11x the cost. Model CPU offload and tiled VAE decoding keep it in 15 GB.
+- **ACE-Step 1.5 runs in its own Python 3.12 `uv` environment as a subprocess.** It needs Python <3.13 and transformers <4.58, and Kaggle's image is Python 3.13 with transformers 5.x. It runs DiT only.
+- **One Kaggle session takes both bundles:** Wan on GPU 0, ACE-Step on GPU 1, because the two GPUs share 29 GB of host RAM.
+- **The steps count (`i2v_steps`, `music.steps`) is now part of each GPU unit's cache key,** so if spike S1 changes it, every affected clip is regenerated and nothing stale is reused.
+- **The P100 has been retired on Kaggle.** "Never the P100" no longer needs guarding in code, but the notebook still checks the GPU.
+
 ## ADR-007 — runs.jsonl for model calls, stages.jsonl for stages
 
 Status: Proposed 2026-11-25.
@@ -153,6 +161,8 @@ Context. One generation must feed 9:16, which is the main submission, and 16:9, 
 Options. A square master centre-cropped both ways lets one clip serve both, but demands strictly centred composition and an upscale of about 1.33× at 720p (2× at 480p). A vertical master gives native quality where it matters, with the horizontal version as a blurred-fill pillarbox. Separate generations per orientation double the GPU bill and are rejected.
 
 Current default. The vertical master. Ken Burns shots are rendered natively in both orientations either way.
+
+Accepted 2026-11-26 (17:00). Vertical master; the 16:9 film shows every shot on a blurred fill, Ken Burns shots included. The first rough cut centre-cropped the Ken Burns shots to 16:9, which keeps only the middle third of a 9:16 keyframe: Tesfaye, the guest and the emperor lost their heads in five of six sampled frames. The Wan clips were already on blurred fill. `delivery.horizontal_kenburns = "fill"` reuses the vertical Ken Burns clip, so the horizontal Ken Burns renders aren't made at all any more. The square-master test (E9) isn't needed.
 
 ## ADR-012 — Toolchain and roles
 
@@ -241,6 +251,10 @@ Then the autonomy setting (ADR-019) decides whether the proposal waits for Y or 
 | Y only | `real_person`, `consent_id`, `voices`, `meta.languages`, `meta.primary`, `meta.runtime_s` |
 
 Consequences. Agents can work in parallel without collisions, on different shots or different fields. Graders can read the reasoning behind each choice, and the interview can be prepared from decisions.jsonl. No agent can touch consent. The cost is a patch layer and one validation pass per proposal, which needs no model calls.
+
+Amended 2026-11-25 (23:00) while building A1. Patches address shots, characters, references and music cues by id, not by array index: `/shots/s04/image_prompt`, with `/shots/@order` for the order. Indices shift whenever a shot is added or removed, which would make an approved proposal edit the wrong shot, and an LLM miscounts indices more easily than it copies an id. A proposal records each change as a path with its value before and after. Approval re-checks those values, so a proposal still applies after unrelated edits, and a stale one is refused with the path that changed.
+
+Amended 2026-11-25 (23:45) while building A2. Before v1 there is no storyboard to own a part of, so the first version doesn't arrive as a proposal. The story chain drafts a complete storyboard, and code assembles it, taking languages, the main version, runtime and voices from Y's config. Y adopts it at gate G2 (`film storyboard --adopt`), which is logged as Y's decision with the draft's hash and a v1 snapshot. Adoption is refused if the draft fails the schema or the lint, which includes the consent gate. From v1 on, every change is a proposal.
 
 Alternatives. Agents editing the file directly with git as the record: the history shows what changed but not why or on what evidence, and nothing stops an agent from editing consent. A shared chat between agents: no ownership and no structured record.
 

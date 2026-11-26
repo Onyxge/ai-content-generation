@@ -1,0 +1,34 @@
+{
+  "title": "The Last Pour",
+  "logline": "A palace server who spent years pouring honey wine for the emperor, unnoticed, is called by his name for one night.",
+  "treatment": "In the lamp-lit quiet of the imperial palace before dawn, a young server named Tesfaye prepares golden honey wine with steady, practiced hands. At a formal gathering lined with white tablecloths and candle glow, an older nobleman quietly mocks Tesfaye by asking whether the emperor even knows his name. Hearing the remark, the great emperor sets down his glass from the head of the table, asks the server his name, and raises a toast directly to Tesfaye. The entire hall falls still before lifting their glasses in unison, leaving Tesfaye struggling to hold back a tear. Later that night, standing alone in a quiet palace corridor overlooking the lights of Addis Ababa, Tesfaye pours the last measure of honey wine, forever transformed by being seen.",
+  "cast": [
+    {
+      "id": "tesfaye",
+      "role": "Palace honey wine server",
+      "description": "Young Ethiopian man in his twenties, slim build, close-cropped black hair, wearing a clean, plain white cotton server tunic and trousers, with quiet, watchful, dignified eyes.",
+      "real_person": false
+    },
+    {
+      "id": "banquet_guest",
+      "role": "Noble banquet guest",
+      "description": "Older Ethiopian man in his fifties, heavy build, short peppered hair, dressed in a tailored dark formal cape over white linens, with a sharp, dismissive expression.",
+      "real_person": false
+    },
+    {
+      "id": "great_emperor",
+      "role": "The great emperor",
+      "description": "a short, elderly Ethiopian man with a very upright, composed posture and a calm, attentive gaze, in a plain dark formal cloak; seen at a distance, from behind or in profile, never in close-up",
+      "real_person": false
+    },
+    {
+      "id": "grandmother",
+      "role": "Family storyteller",
+      "description": "Elderly Ethiopian matriarch who is mentioned only in voiceover narration as the keeper of the family story, never appearing on screen.",
+      "real_person": true
+    }
+  ],
+  "look": "Warm 35mm film aesthetic with amber candlelight, rich golden honey reflections, crisp white linen textures, and soft architectural shadows.",
+  "music": "Gentle, understated acoustic strings with soft traditional krar notes, warm and meditative under spoken narration.",
+  "feeling": "Quiet dignity, emotional recognition, and lasting reverence."
+}

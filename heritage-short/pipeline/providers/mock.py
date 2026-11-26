@@ -60,3 +60,32 @@ class MockVideo:
     def animate(self, *, keyframe: Path, prompt: str, seed: int, frames: int, size, fps: int, out: Path) -> dict:
         media.kenburns(keyframe, out, tuple(size), frames / fps, fps, zoom="out", pan="right" if seed % 2 else "left")
         return {"gpu_s": 0.0}
+
+
+class MockText:
+    """Answers any structured-output request with the schema's own example, if it has one
+    (`"examples": [...]` at the top level), or a minimal object that satisfies the schema."""
+    name, model = "mock", "mock-text"
+
+    def generate_json(self, *, prompt: str, schema: dict, system: str = "", images=(), temperature: float = 0.4):
+        if schema.get("examples"):
+            return schema["examples"][0], {"params": {"images": len(images)}}
+        return _minimal(schema), {"params": {"images": len(images)}}
+
+
+def _minimal(schema: dict):
+    kind = schema.get("type")
+    if "enum" in schema:
+        return schema["enum"][0]
+    if kind == "object":
+        props = schema.get("properties", {})
+        return {k: _minimal(props[k]) for k in schema.get("required", []) if k in props}
+    if kind == "array":
+        return [_minimal(schema.get("items", {})) for _ in range(schema.get("minItems", 0))]
+    if kind == "integer":
+        return int(schema.get("minimum", 0))
+    if kind == "number":
+        return float(schema.get("minimum", 0))
+    if kind == "boolean":
+        return False
+    return "mock"

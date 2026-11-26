@@ -1,0 +1,10 @@
+{
+  "cache_key": "b122128fed2c9ce32ed95bca701cd76c66efaaa3956a0e7ee4a1567790a42c94",
+  "model": "@cf/black-forest-labs/flux-2-klein-4b",
+  "output_sha": "c1ef92f94f80fe796a0f3f9c8ece48c200358e1f50063167ede44db5666c467b",
+  "provider": "cloudflare",
+  "run_id": "r-20261126-132252-505e",
+  "seed": 303,
+  "stage": "references",
+  "unit": "ref_great_emperor.303"
+}

@@ -14,7 +14,8 @@ dependencies = [
 providers = [
   "google-genai>=1.0",
   "requests>=2.31",
-  "kaggle>=1.6",
+  "kaggle>=2.2",
+  "six",                 # kaggle 2.2.5 imports it without declaring it
 ]
 
 [project.scripts]

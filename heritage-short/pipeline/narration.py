@@ -16,6 +16,8 @@ class Narration(Stage):
     def units(self, ctx):
         units = []
         for lang in ctx.sb["meta"]["languages"]:
+            if ctx.langs and lang not in ctx.langs:      # e.g. voice English before the Amharic is checked
+                continue
             voice = ctx.sb["voices"][lang]
             for shot in ctx.sb["shots"]:
                 text = (shot["narration"].get(lang) or "").strip()

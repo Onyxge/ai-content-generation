@@ -1,0 +1,28 @@
+{
+  "beats": [
+    {
+      "id": "b1",
+      "summary": "Tesfaye begins his palace duties before dawn, carefully preparing golden honey wine with steady, practiced hands in devoted anonymity.",
+      "feeling": "Quiet devotion and humble diligence.",
+      "picture": "Centered medium shot of Tesfaye, a young Ethiopian server in a crisp white cotton tunic, holding a glass berele flask filled with glowing golden honey wine in a warm, lamp-lit palace room."
+    },
+    {
+      "id": "b2",
+      "summary": "At the evening banquet, an arrogant nobleman belittles Tesfaye by asking aloud if the emperor even knows his name, forcing the server to lower his eyes.",
+      "feeling": "Stung dignity and silent restraint.",
+      "picture": "Centered medium shot of an older Ethiopian banquet guest in a dark formal cape over white linen, casting a sharp, dismissive smirk beside candlelit glasses on a banquet table."
+    },
+    {
+      "id": "b3",
+      "summary": "The great emperor learns Tesfaye's name and raises a toast to him from the head of the table, moving the server to hold back tears of overwhelming validation.",
+      "feeling": "Profound recognition and tender emotional release.",
+      "picture": "Centered close-up of Tesfaye in his white tunic, his eyes glistening with restrained tears of quiet gratitude in the warm banquet candlelight."
+    },
+    {
+      "id": "b4",
+      "summary": "Alone in a palace doorway after the banquet, Tesfaye pours the last measure of honey wine and takes a quiet sip under the night sky, transformed by having been seen.",
+      "feeling": "Serene pride and enduring reverence.",
+      "picture": "Centered full-body silhouette of Tesfaye standing in a stone palace archway at night, raising a small glass flask against the soft golden glow of distant palace lights."
+    }
+  ]
+}

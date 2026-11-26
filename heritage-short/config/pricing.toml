@@ -1,0 +1,14 @@
+# List prices for `film costs`: what the free-tier work would cost if paid. Only checked prices
+# go here, each with its source and date; anything else shows as "no checked price".
+
+[models."@cf/black-forest-labs/flux-2-klein-4b"]
+# Cloudflare Workers AI pricing (developers.cloudflare.com/workers-ai/platform/pricing, checked
+# 2026-11-25): $0.011 per 1,000 neurons; klein costs 26.05 neurons per 512x512 output tile. A
+# 1080x1920 keyframe is up to 12 tiles (313 neurons), so this is an upper bound per image;
+# a 1024x1024 reference is 4 tiles (about $0.0011).
+usd_per_call = 0.0034
+source = "developers.cloudflare.com/workers-ai/platform/pricing, 2026-11-25"
+
+# Not priced, because nothing was checked: Gemini 3.8 Flash and TTS paid rates; Kaggle T4 time
+# (free; a cloud T4 list price wasn't verified); Addis AI bills 5 ETB per generated minute
+# (docs.addisassistant.com, 2026-11-25), in ETB, so it's in the prose, not converted here.

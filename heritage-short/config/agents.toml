@@ -1,0 +1,117 @@
+# Who may change what in storyboard.json, and how much each kind of change may happen
+# without Y (ADR-018, ADR-019).
+#
+# Paths are JSON Pointers over the id-keyed view of the storyboard: shots, characters,
+# references and music cues are addressed by id (`/shots/s04/image_prompt`), and `*` matches
+# any one id or key. A pattern covers everything under it.
+
+# Nobody but Y changes these: who is real, their consent, the voices, the languages, which
+# version is the main one, and the runtime the brief allows.
+y_only = [
+  "/characters/*/real_person",
+  "/characters/*/consent_id",
+  "/voices",
+  "/meta/languages",
+  "/meta/primary",
+  "/meta/runtime_s",
+]
+
+# Pins: how a chosen candidate reaches the film (ADR-017). Any agent may propose a pin;
+# whether it applies without Y depends on its kind's autonomy below.
+pins = [
+  "/shots/*/keyframe_seed",
+  "/shots/*/motion/seed",
+  "/references/*/selected",
+  "/references/*/seeds",
+  "/music/cues/*/selected",
+  "/music/cues/*/seeds",
+]
+
+# Decision kind of a change, by path (first match wins). Any other change takes the kind of
+# the agent that proposed it. A proposal's autonomy is the strictest of its changes' kinds.
+[kinds]
+"/shots/*/keyframe_seed" = "keyframe_pin"
+"/shots/*/motion/seed" = "motion_pin"
+"/references/*/selected" = "golden_reference"
+"/references/*/seeds" = "golden_reference"
+"/music/cues/*/selected" = "music_pick"
+"/music/cues/*/seeds" = "music_pick"
+"/shots/*/motion/prompt" = "motion_prompt"
+"/shots/*/motion/kenburns" = "motion_prompt"
+
+# propose: waits for Y.  veto: applied now, listed for Y to confirm or revert.  auto: applied.
+[autonomy]
+story = "propose"
+lookdev = "propose"
+cinematographer = "propose"
+composer = "propose"
+golden_reference = "propose"   # never delegated (ADR-019)
+keyframe_pin = "propose"       # moves to "veto" only when E13 shows 8 of 10 agreement
+motion_pin = "propose"
+motion_prompt = "veto"
+music_pick = "propose"         # the score is chosen by ear
+
+# What each agent may change. `creates` lists collections it may add items to, remove
+# items from and reorder; `owns` lists the fields it may edit on existing items.
+[agents.story]
+creates = ["/shots"]
+owns = [
+  "/meta/title",
+  "/meta/logline",
+  "/shots/*/beat",
+  "/shots/*/reason",
+  "/shots/*/size",
+  "/shots/*/duration_s",
+  "/shots/*/characters",
+  "/shots/*/narration",
+  "/shots/*/subtitle_en",
+  "/end_card",
+]
+
+[agents.lookdev]
+creates = ["/references"]
+owns = [
+  "/style",
+  "/characters/*/description",
+  "/characters/*/reference",
+  "/references/*/kind",
+  "/references/*/characters",
+  "/references/*/prompt",
+]
+
+[agents.cinematographer]
+creates = []
+owns = [
+  "/shots/*/image_prompt",
+  "/shots/*/references",
+  "/shots/*/motion/mode",
+  "/shots/*/motion/fallback",
+  "/shots/*/motion/prompt",
+  "/shots/*/motion/kenburns",
+]
+
+[agents.critic]
+creates = []
+owns = []          # the critic only writes verdicts and proposes pins
+
+[agents.composer]
+creates = ["/music/cues"]
+owns = [
+  "/music/cues/*/from",
+  "/music/cues/*/to",
+  "/music/cues/*/caption",
+  "/music/cues/*/instrumental",
+  "/music/cues/*/bpm",
+  "/music/cues/*/key",
+  "/music/cues/*/length_s",
+  "/music/cues/*/why",
+  "/music/cues/*/anchor",
+]
+
+# Spending limits the producer enforces when agents explore (unit A3).
+[budgets]
+reference_candidates = 4
+keyframe_candidates_per_round = 3
+keyframe_rounds = 3            # the brief's three attempts per shot, then the shot is flagged for Y
+music_candidates = 3
+reserve_fraction = 0.25        # share of each daily allowance kept for re-renders after the user tests

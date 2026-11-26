@@ -1,0 +1,10 @@
+{
+  "cache_key": "d9976fdc38852489c709d38ac033f083f58096d65eef82d5c27e6c956da61745",
+  "model": "gemini-3.8-flash",
+  "output_sha": "b6a00d6d3d26369e4d0a88ee4eaeb33e6ee0947579908229ca3fb0044b5d2246",
+  "provider": "gemini",
+  "run_id": "r-20261125-214203-88c2",
+  "seed": null,
+  "stage": "story",
+  "unit": "shots"
+}

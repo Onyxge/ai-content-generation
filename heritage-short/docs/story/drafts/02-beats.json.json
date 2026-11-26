@@ -1,0 +1,13 @@
+{
+  "cache_key": "f4fb610c73e7811bfd13ea5e63d9473291cd3ea5ad5817888b0049f89b72b6b3",
+  "edited_by": "Y",
+  "kept_by": "Y",
+  "kept_from_key": "2a2fbc0ba1ec59dc21e32757639c007492192ee9b6f773785813d36c0071b381",
+  "model": "gemini-3.8-flash",
+  "output_sha": "b2dbd98e205ba416c27c8415ed64dbf1e57c82db8934934c52c5a3e62c9f468c",
+  "provider": "gemini",
+  "run_id": "r-20261125-212234-b813",
+  "seed": null,
+  "stage": "story",
+  "unit": "beats"
+}

@@ -1,0 +1,81 @@
+{
+  "id": "P-0003",
+  "created": "2026-11-26T13:43:24+00:00",
+  "actor": "Y",
+  "rationale": "Gate G4: Y picked the golden reference for each character from the re-rendered options (E22).",
+  "evidence": {
+    "gate": "G4",
+    "sheets": [
+      "build/review/ref_tesfaye_before_after.png",
+      "build/review/ref_banquet_guest_before_after.png",
+      "build/review/ref_great_emperor_before_after.png"
+    ],
+    "why": {
+      "ref_tesfaye": "103: clean front, three-quarter and profile; consistent across views",
+      "ref_banquet_guest": "202: full body, reads Habesha, tibeb-bordered cuffs",
+      "ref_great_emperor": "302: full body in three views; carries height and posture; no likeness of a real person"
+    }
+  },
+  "patch": [
+    {
+      "op": "add",
+      "path": "/references/ref_tesfaye/selected",
+      "value": 103
+    },
+    {
+      "op": "add",
+      "path": "/references/ref_banquet_guest/selected",
+      "value": 202
+    },
+    {
+      "op": "add",
+      "path": "/references/ref_great_emperor/selected",
+      "value": 302
+    }
+  ],
+  "base_sha": "ae3fa0741ff4",
+  "kinds": [
+    "golden_reference"
+  ],
+  "autonomy": "auto",
+  "changes": [
+    {
+      "path": "/references/ref_tesfaye/selected",
+      "before": {
+        "missing": true
+      },
+      "after": {
+        "value": 103
+      }
+    },
+    {
+      "path": "/references/ref_banquet_guest/selected",
+      "before": {
+        "missing": true
+      },
+      "after": {
+        "value": 202
+      }
+    },
+    {
+      "path": "/references/ref_great_emperor/selected",
+      "before": {
+        "missing": true
+      },
+      "after": {
+        "value": 302
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {
+      "image": 8,
+      "speech": 10,
+      "video": 3
+    },
+    "local_renders": 20
+  },
+  "confirmed": true
+}
