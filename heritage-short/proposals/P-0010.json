@@ -1,0 +1,40 @@
+{
+  "id": "P-0010",
+  "created": "2026-11-26T17:17:58+00:00",
+  "actor": "Y",
+  "rationale": "Y made Amharic the main version: all three testers in user test 2 would send the Amharic version to family (DESIGN.md). The vertical Amharic export is the main submission; English stays as the second version.",
+  "evidence": {
+    "test": "DESIGN.md, user test 2, question 6 (T1, T2, T3: Amharic)",
+    "adr": "ADR-015: the user tests pick the main version"
+  },
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/meta/primary",
+      "value": "am"
+    }
+  ],
+  "base_sha": "b637e4e1d17a",
+  "kinds": [
+    "Y"
+  ],
+  "autonomy": "auto",
+  "changes": [
+    {
+      "path": "/meta/primary",
+      "before": {
+        "value": "en"
+      },
+      "after": {
+        "value": "am"
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {},
+    "local_renders": 0
+  },
+  "confirmed": true
+}

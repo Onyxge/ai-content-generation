@@ -1,0 +1,59 @@
+{
+  "id": "P-0007",
+  "created": "2026-11-26T15:53:17+00:00",
+  "actor": "cinematographer",
+  "rationale": "Drafted by Claude Code reviewing the Wan clips, standing in for the critic and cinematographer agents. s08.i2v invents a second person's hand pushing a white object to Tesfaye's mouth, which is unusable. s10.i2v shows identity drift: as the camera pushes in, his face changes and grows a moustache, and he never drinks. Both keyframes are good. Following the brief, these shots fall back to the slow Ken Burns move over the keyframe rather than spending another 35 GPU minutes each. The rejected clips stay in the cache.",
+  "evidence": {
+    "frames": "build/review/wan_s06_s08_s10.png (0.1, 1.7, 3.3, 4.9 s)",
+    "gpu_s": {
+      "s06": 2059.8,
+      "s08": 2065.4,
+      "s10": 2067.4
+    },
+    "kept": "s06.i2v (gaze lowers, hand to chin: believable)"
+  },
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/shots/s08/motion/mode",
+      "value": "kenburns"
+    },
+    {
+      "op": "replace",
+      "path": "/shots/s10/motion/mode",
+      "value": "kenburns"
+    }
+  ],
+  "base_sha": "b0da80a66335",
+  "kinds": [
+    "cinematographer"
+  ],
+  "autonomy": "propose",
+  "changes": [
+    {
+      "path": "/shots/s08/motion/mode",
+      "before": {
+        "value": "i2v"
+      },
+      "after": {
+        "value": "kenburns"
+      }
+    },
+    {
+      "path": "/shots/s10/motion/mode",
+      "before": {
+        "value": "i2v"
+      },
+      "after": {
+        "value": "kenburns"
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {},
+    "local_renders": 0
+  },
+  "confirmed": true
+}

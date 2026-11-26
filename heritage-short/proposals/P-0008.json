@@ -1,0 +1,48 @@
+{
+  "id": "P-0008",
+  "created": "2026-11-26T15:56:03+00:00",
+  "actor": "story",
+  "rationale": "Drafted by Claude Code standing in for the story agent. The end card names the models (ETHICS.md, labelling plan), but it still says 'Voice: Gemini TTS', and since P-0005 the Amharic narration is Addis Voices 2. Both films share one end card, so it names both voices.",
+  "evidence": {
+    "decision": "P-0005 (voices.am to Addis AI)",
+    "ethics": "ETHICS.md, Labelling plan: the end card names the models"
+  },
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/end_card/lines/2",
+      "value": "Images: FLUX.2 klein · Motion: Wan 2.2 · Voices: Gemini TTS, Addis Voices 2 · Score: ACE-Step 1.5"
+    }
+  ],
+  "base_sha": "d3389f022dff",
+  "kinds": [
+    "story"
+  ],
+  "autonomy": "propose",
+  "changes": [
+    {
+      "path": "/end_card/lines",
+      "before": {
+        "value": [
+          "Made with AI",
+          "Inspired by a family story. Some scenes are imagined.",
+          "Images: FLUX.2 klein · Motion: Wan 2.2 · Voice: Gemini TTS · Score: ACE-Step 1.5"
+        ]
+      },
+      "after": {
+        "value": [
+          "Made with AI",
+          "Inspired by a family story. Some scenes are imagined.",
+          "Images: FLUX.2 klein · Motion: Wan 2.2 · Voices: Gemini TTS, Addis Voices 2 · Score: ACE-Step 1.5"
+        ]
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {},
+    "local_renders": 0
+  },
+  "confirmed": true
+}

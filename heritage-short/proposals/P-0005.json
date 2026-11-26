@@ -1,0 +1,65 @@
+{
+  "id": "P-0005",
+  "created": "2026-11-26T14:26:47+00:00",
+  "actor": "Y",
+  "rationale": "Y chose Addis AI (Addis Voices 2, built for Amharic) for the Amharic narration. It has no daily cap, while Gemini's free TTS has about 10 calls a day, which leaves those calls for English retakes. am-loza is a female narration voice, matching the English narrator (Gemini Kore).",
+  "evidence": {
+    "failures": "FAILURES.md F5 (Gemini TTS daily cap)",
+    "experiment": "E21 (Addis vs Gemini for Amharic, now optional)",
+    "voice_catalog": "Addis AI docs: am-loza, female, narration"
+  },
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/voices/am",
+      "value": {
+        "model": "addis-voices-2",
+        "voice": "am-loza"
+      }
+    }
+  ],
+  "base_sha": "246d13dc3b0f",
+  "kinds": [
+    "Y"
+  ],
+  "autonomy": "auto",
+  "changes": [
+    {
+      "path": "/voices/am/model",
+      "before": {
+        "value": "gemini-3.8-flash-tts"
+      },
+      "after": {
+        "value": "addis-voices-2"
+      }
+    },
+    {
+      "path": "/voices/am/voice",
+      "before": {
+        "value": "Kore"
+      },
+      "after": {
+        "value": "am-loza"
+      }
+    },
+    {
+      "path": "/voices/am/style",
+      "before": {
+        "value": "warm, unhurried, intimate, like telling a story to family"
+      },
+      "after": {
+        "missing": true
+      }
+    }
+  ],
+  "status": "applied",
+  "warnings": [],
+  "price": {
+    "model_calls": {
+      "speech": 10,
+      "video": 3
+    },
+    "local_renders": 0
+  },
+  "confirmed": true
+}

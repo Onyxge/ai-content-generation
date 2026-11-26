@@ -1,0 +1,44 @@
+{
+  "id": "P-0004",
+  "created": "2026-11-26T13:46:59+00:00",
+  "actor": "cinematographer",
+  "rationale": "Drafted by Claude Code standing in for the cinematographer agent (A3 isn't built). The s07 keyframe showed the great emperor from the front, raising his glass. That breaks Y's framing rule (from behind or in profile, never close; ETHICS.md), and the narration says he sets his glass down. The new prompt puts the camera behind him and matches the narration.",
+  "evidence": {
+    "keyframe": "build/review/keyframes_all.png (s07)",
+    "rule": "ETHICS.md, real people table; brief: frame him at a distance, from behind or in profile",
+    "narration_en": "The great emperor set down his glass and asked for his name."
+  },
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/shots/s07/image_prompt",
+      "value": "Wide shot from directly behind great_emperor, his back to the camera and his face not visible, seated at the head of a long banquet table; he sets his glass down on the white cloth; along both sides of the table the guests turn to look toward him; warm candlelight"
+    }
+  ],
+  "base_sha": "246d13dc3b0f",
+  "kinds": [
+    "cinematographer"
+  ],
+  "autonomy": "propose",
+  "changes": [
+    {
+      "path": "/shots/s07/image_prompt",
+      "before": {
+        "value": "Centered wide shot framed from behind great_emperor at the head of the banquet table, as he raises his glass toward the room in warm candle glow."
+      },
+      "after": {
+        "value": "Wide shot from directly behind great_emperor, his back to the camera and his face not visible, seated at the head of a long banquet table; he sets his glass down on the white cloth; along both sides of the table the guests turn to look toward him; warm candlelight"
+      }
+    }
+  ],
+  "status": "rejected",
+  "warnings": [],
+  "price": {
+    "model_calls": {
+      "image": 8,
+      "speech": 10,
+      "video": 3
+    },
+    "local_renders": 20
+  }
+}

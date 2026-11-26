@@ -1,0 +1,374 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "The Last Pour",
+    "logline": "A palace server who spent years pouring honey wine for the emperor, unnoticed, is called by his name for one night.",
+    "languages": [
+      "en",
+      "am"
+    ],
+    "primary": "am",
+    "runtime_s": [
+      60,
+      90
+    ]
+  },
+  "style": {
+    "block": "Warm 35mm film aesthetic with amber candlelight, rich golden honey reflections, crisp white linen textures, and soft architectural shadows."
+  },
+  "characters": [
+    {
+      "id": "tesfaye",
+      "description": "a young Ethiopian Habesha man in his mid-twenties, warm dark-brown skin, short tightly curled black hair, a slender face with high cheekbones and a straight narrow nose, dark brown eyes; slim build; a plain white cotton server's tunic with a thin woven tibeb border at the cuffs, and white cotton trousers; quiet, watchful, dignified",
+      "real_person": false,
+      "reference": "ref_tesfaye"
+    },
+    {
+      "id": "banquet_guest",
+      "description": "an Ethiopian Habesha nobleman in his fifties, warm brown skin, short grey-flecked tightly curled hair, a trimmed grey moustache, a full face; a heavy build; a black wool kaba cape over a white cotton tunic; a thin, dismissive smile",
+      "real_person": false,
+      "reference": "ref_banquet_guest"
+    },
+    {
+      "id": "great_emperor",
+      "description": "a short, elderly Ethiopian Habesha man, warm dark-brown skin, close-cropped white hair, clean-shaven; a very upright, composed posture and a calm, attentive gaze; a plain dark formal cloak over white; seen at a distance, from behind or in profile, never in close-up",
+      "real_person": false,
+      "reference": "ref_great_emperor"
+    }
+  ],
+  "references": [
+    {
+      "id": "ref_tesfaye",
+      "kind": "character",
+      "characters": [
+        "tesfaye"
+      ],
+      "prompt": "character sheet of the same person: front view, three-quarter view and profile, neutral expression, plain light background",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "selected": 103
+    },
+    {
+      "id": "ref_banquet_guest",
+      "kind": "character",
+      "characters": [
+        "banquet_guest"
+      ],
+      "prompt": "character sheet of the same person: front view, three-quarter view and profile, neutral expression, plain light background",
+      "seeds": [
+        201,
+        202,
+        203,
+        204
+      ],
+      "selected": 202
+    },
+    {
+      "id": "ref_great_emperor",
+      "kind": "character",
+      "characters": [
+        "great_emperor"
+      ],
+      "prompt": "character sheet of the same person: front view, three-quarter view and profile, neutral expression, plain light background",
+      "seeds": [
+        301,
+        302,
+        303,
+        304
+      ],
+      "selected": 302
+    }
+  ],
+  "voices": {
+    "en": {
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Kore",
+      "style": "warm, unhurried, intimate, like telling a story to family"
+    },
+    "am": {
+      "model": "addis-voices-2",
+      "voice": "am-loza"
+    }
+  },
+  "shots": [
+    {
+      "id": "s01",
+      "reason": "Establishes the quiet routine and humble environment where Tesfaye begins his day of palace service.",
+      "beat": "b1",
+      "size": "wide",
+      "duration_s": 9,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered wide shot of tesfaye arranging glass flasks in a stone palace kitchen before dawn, illuminated by the warm amber glow of oil lamps with deep shadows in the background.",
+      "keyframe_seed": 1001,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow gentle push in toward the center",
+        "kenburns": {
+          "zoom": "in",
+          "pan": "none"
+        }
+      },
+      "narration": {
+        "en": "For years, he served the emperor in his palace in Addis Ababa. They called him the honey wine server.",
+        "am": "በአዲስ አበባ ቤተ መንግሥት ለብዙ ዓመታት ንጉሠ ነገሥቱን አገለገለ። የጠጅ አሳላፊው እያሉ ይጠሩት ነበር።"
+      }
+    },
+    {
+      "id": "s02",
+      "reason": "Shows the craft and steady precision of serving honey wine into the traditional glass flask.",
+      "beat": "b1",
+      "size": "insert",
+      "duration_s": 6,
+      "characters": [],
+      "image_prompt": "Centered insert shot of golden honey wine pouring in a thin, perfectly steady stream into a traditional glass berele flask resting on a wooden surface under warm lamp light.",
+      "keyframe_seed": 1002,
+      "motion": {
+        "mode": "i2v",
+        "prompt": "Static camera as honey wine pours smoothly into the glass flask with rising micro-bubbles",
+        "fallback": "kenburns",
+        "seed": 2002,
+        "kenburns": {
+          "zoom": "in",
+          "pan": "none"
+        }
+      },
+      "narration": {
+        "en": "He knew how to pour without spilling a single drop.",
+        "am": "አንዲት ጠብታ እንኳን ሳያፈስስ መቅዳት ጠንቅቆ ያውቃል።"
+      }
+    },
+    {
+      "id": "s03",
+      "reason": "Introduces Tesfaye's composed and watchful demeanour as he prepares to serve unnoticed.",
+      "beat": "b1",
+      "size": "medium close-up",
+      "duration_s": 7,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered medium close-up of tesfaye holding a serving tray at chest height, looking forward with quiet dignity in a dimly lit palace corridor.",
+      "keyframe_seed": 1003,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Very slow lateral pan to the left across the frame",
+        "kenburns": {
+          "zoom": "none",
+          "pan": "left"
+        }
+      },
+      "narration": {
+        "en": "And he knew how to disappear quietly into the room.",
+        "am": "በአዳራሹ ውስጥም ሳይታወቅ በዝምታ መሰወርን ያውቅበታል።"
+      }
+    },
+    {
+      "id": "s04",
+      "reason": "Sets the stage of the formal evening banquet and the grandeur surrounding the unnoticed server.",
+      "beat": "b2",
+      "size": "wide",
+      "duration_s": 6,
+      "characters": [
+        "great_emperor"
+      ],
+      "image_prompt": "Centered wide shot of a long formal palace banquet table covered in white linen and glowing candlelight, with great_emperor seated at the head in the distance in profile.",
+      "keyframe_seed": 1004,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow smooth pull out revealing the depth of the banquet hall",
+        "kenburns": {
+          "zoom": "out",
+          "pan": "none"
+        }
+      },
+      "narration": {
+        "en": "One night, at a formal gathering, guests filled the long tables.",
+        "am": "አንድ ምሽት በታላቅ ግብዣ ላይ ረዣዥሞቹ ማዕዶች በእንግዶች ተሞልተው ነበር።"
+      }
+    },
+    {
+      "id": "s05",
+      "reason": "Captures the dismissive arrogance of the nobleman questioning Tesfaye's significance.",
+      "beat": "b2",
+      "size": "medium",
+      "duration_s": 6,
+      "characters": [
+        "banquet_guest"
+      ],
+      "image_prompt": "Centered medium shot of banquet_guest seated at the banquet table beside candlelit glasses, turning sideways with a thin smirk.",
+      "keyframe_seed": 1005,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow drift panning right with a subtle push in",
+        "kenburns": {
+          "zoom": "in",
+          "pan": "right"
+        }
+      },
+      "narration": {
+        "en": "A guest asked whether the emperor even knew his name.",
+        "am": "አንድ እንግዳም ‘ንጉሡ ስምህን እንኳ ያውቁታል ወይ?’ ሲል ጠየቀው።"
+      }
+    },
+    {
+      "id": "s06",
+      "reason": "Shows Tesfaye absorbing the mockery with silent restraint and wounded pride.",
+      "beat": "b2",
+      "size": "medium close-up",
+      "duration_s": 7,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered medium close-up of tesfaye standing beside the banquet table, slowly lowering his eyes in silence under soft candlelight.",
+      "keyframe_seed": 1006,
+      "motion": {
+        "mode": "i2v",
+        "prompt": "Static camera as the server gently lowers his gaze and holds his breath in composure",
+        "fallback": "kenburns",
+        "seed": 2006,
+        "kenburns": {
+          "zoom": "in",
+          "pan": "none"
+        }
+      },
+      "narration": {
+        "en": "He lowered his eyes in silence, and said nothing.",
+        "am": "እርሱ ግን ዓይኖቹን አቀረቀረ፤ ምንም አልመለሰም።"
+      }
+    },
+    {
+      "id": "s07",
+      "reason": "Shows the emperor taking notice and commanding the hall to honor the server.",
+      "beat": "b3",
+      "size": "wide",
+      "duration_s": 7,
+      "characters": [
+        "great_emperor"
+      ],
+      "image_prompt": "Centered wide shot framed from behind great_emperor at the head of the banquet table, as he raises his glass toward the room in warm candle glow.",
+      "keyframe_seed": 1007,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow push in toward the head of the banquet table",
+        "kenburns": {
+          "zoom": "in",
+          "pan": "none"
+        }
+      },
+      "narration": {
+        "en": "The great emperor set down his glass and asked for his name.",
+        "am": "ታላቁ ንጉሥ ጽዋቸውን አስቀምጠው ስሙን ጠየቁት።"
+      }
+    },
+    {
+      "id": "s08",
+      "reason": "Highlights the pivotal emotional breakthrough as Tesfaye is recognized by name.",
+      "beat": "b3",
+      "size": "close-up",
+      "duration_s": 8,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered close-up of tesfaye looking up with glistening eyes, struggling to contain an overwhelming emotion amidst soft background candlelight.",
+      "keyframe_seed": 1008,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Subtle handheld tremor as the subject takes a slow, shaky breath with glistening eyes",
+        "fallback": "kenburns",
+        "seed": 2008,
+        "kenburns": {
+          "zoom": "in",
+          "pan": "none"
+        }
+      },
+      "narration": {
+        "en": "Hearing Tesfaye, he raised a toast, and the whole hall lifted their glasses.",
+        "am": "«ተስፋዬ» መባሉን ሲሰሙ ለክብሩ ጽዋ አነሡ፤ መላው አዳራሽም አብሮ ጽዋውን አነሣ።"
+      }
+    },
+    {
+      "id": "s09",
+      "reason": "Reflects the intimate ritual of his final pour after the hall has emptied.",
+      "beat": "b4",
+      "size": "insert",
+      "duration_s": 6,
+      "characters": [],
+      "image_prompt": "Centered insert shot of a single glass berele flask filled with golden honey wine resting on a stone windowsill beside a solitary candle.",
+      "keyframe_seed": 1009,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Slow lateral pan to the left keeping the glowing glass centered",
+        "kenburns": {
+          "zoom": "none",
+          "pan": "left"
+        }
+      },
+      "narration": {
+        "en": "My grandmother said he spent his life serving the emperor.",
+        "am": "አያቴ እንደነገረችኝ ሙሉ ዘመኑን ያሳለፈው ንጉሠ ነገሥቱን በማገልገል ነበር።"
+      }
+    },
+    {
+      "id": "s10",
+      "reason": "Concludes the film on Tesfaye's quiet private pride and transformed dignity.",
+      "beat": "b4",
+      "size": "medium",
+      "duration_s": 8,
+      "characters": [
+        "tesfaye"
+      ],
+      "image_prompt": "Centered medium shot of tesfaye standing alone in an open stone palace archway at night, holding a berele flask and gazing out at distant city lights.",
+      "keyframe_seed": 1010,
+      "motion": {
+        "mode": "kenburns",
+        "prompt": "Gentle forward camera drift as the subject slowly brings the glass to his lips looking out",
+        "fallback": "kenburns",
+        "seed": 2010,
+        "kenburns": {
+          "zoom": "in",
+          "pan": "none"
+        }
+      },
+      "narration": {
+        "en": "But that night, for one moment, the whole room remembered the man behind the tray.",
+        "am": "ነገር ግን በዚያች ምሽት፣ ለአንድ ቅጽበት፣ መላው አዳራሽ ከትሪው ጀርባ የነበረውን ሰው አስታወሰው።"
+      }
+    }
+  ],
+  "music": {
+    "cues": [
+      {
+        "id": "m1",
+        "from": "s01",
+        "to": "s10",
+        "caption": "Gentle, understated acoustic strings with soft traditional krar notes, warm and meditative under spoken narration.",
+        "instrumental": true,
+        "length_s": 86,
+        "seeds": [
+          11,
+          12,
+          13
+        ],
+        "selected": 13,
+        "why": "Chosen by ear by Y, and preferred by a colleague: the quietest take (-16.3 LUFS). It falls silent under the grandmother line (s09) and the last words of s10, so the music steps back for the family memory and the final line, then returns for the end card.",
+        "anchor": {
+          "shot": "s09",
+          "at_s": 54.8
+        }
+      }
+    ]
+  },
+  "end_card": {
+    "lines": [
+      "Made with AI",
+      "Inspired by a family story. Some scenes are imagined.",
+      "Images: FLUX.2 klein · Motion: Wan 2.2 · Voices: Gemini TTS, Addis Voices 2 · Score: ACE-Step 1.5"
+    ],
+    "duration_s": 3
+  }
+}
